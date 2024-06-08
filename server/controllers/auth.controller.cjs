@@ -34,6 +34,9 @@ const addUser = async (req, res) => {
       username: req.body.username,
       password: await bcrypt.hash(req.body.password, 10),
       email: req.body.email,
+      fullName: req.body.fullName,
+      address: req.body.location,
+      phoneNumber: req.body.phoneNumber,
     };
     const isAvailable = await Users.findOne({
       $or: [{ username: values.username }, { email: values.email }],
@@ -41,13 +44,8 @@ const addUser = async (req, res) => {
     if (isAvailable) {
       res.status(200).json({ status: false });
     } else {
-      await Users.insertMany([values])
-        .then((result) => {
-          res.status(201).json({ status: true, Result: result });
-        })
-        .catch((error) => {
-          res.status(400).json({ status: false, Result: "Bad request" });
-        });
+      await Users.insertMany([values]);
+      res.status(201).json({ status: true });
     }
   } catch (error) {
     res.status(503).json({ status: false, Result: "Internal server error" });
@@ -153,7 +151,7 @@ const signUser = async (req, res) => {
       }
     } else {
       res
-        .status(404)
+        .status(200)
         .json({ status: false, Result: "Username or email not registered" });
     }
   } catch (error) {

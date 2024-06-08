@@ -84,7 +84,10 @@ const Subscribe = styled(Box)({
   alignItems: "center",
   justifyContent: "center",
 });
+import { axiosPrivate } from "../api/axios.js";
 const Home = () => {
+  const [email, setEmail] = useState("");
+  const [msg, setMsg] = useState("");
   const testimonies = [
     {
       name: "Tendai",
@@ -112,6 +115,20 @@ const Home = () => {
     const newScrollPosition = scrollPosition + scrollAmount;
     setScrollPosition(newScrollPosition);
     containerRef.current.scrollLeft = newScrollPosition;
+  };
+  const handleSubscribe = () => {
+    if (email === "") {
+      return;
+    } else {
+      axiosPrivate.post("/user/subscribe", { email }).then((result) => {
+        if (result.data.status) {
+          setEmail("");
+          setMsg("Subscribed");
+        } else {
+          setMsg(result.data.Result);
+        }
+      });
+    }
   };
   return (
     <Box sx={{ width: "98dvw" }}>
@@ -377,7 +394,11 @@ const Home = () => {
         >
           Subscribe To Get Discount Offers
         </Typography>
-
+        {msg && (
+          <Typography color="red" variant="bod1" paragraph>
+            {msg}
+          </Typography>
+        )}
         <Box
           component={"form"}
           sx={{
@@ -391,6 +412,9 @@ const Home = () => {
         >
           <TextField
             placeholder="youremailaddress@gmail.com"
+            id="email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
             sx={{
               width: "50%",
               border: "none",
@@ -399,6 +423,7 @@ const Home = () => {
             }}
           />
           <Button
+            onClick={handleSubscribe}
             sx={{
               backgroundColor: "#002c3e",
               padding: "0.8em 1em",

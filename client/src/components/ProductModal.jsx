@@ -11,7 +11,8 @@ import {
 } from "@mui/material";
 import { useState, Suspense, useEffect } from "react";
 import { BASE_URL } from "../api/axios.js";
-const ProductModal = ({ product, open, handleClose }) => {
+
+const ProductModal = ({ product, open, handleClose, handleAddToCart }) => {
   const [image, setImage] = useState();
   const [currentProduct, setCurrentProduct] = useState({
     name: "",
@@ -46,15 +47,16 @@ const ProductModal = ({ product, open, handleClose }) => {
           <Box
             sx={{
               position: "absolute",
-              width: "60%",
-              height: "70dvh",
-              display: "flex",
-              top: "5%",
-              left: "8%",
+              width: { xs: "100%", sm: "100%", md: "60%", lg: "60%" },
+              minHeight: "70dvh",
+              display: { sm: "block", md: "flex" },
+              top: { sm: 0, md: "5%" },
+              left: { sm: 0, md: "8%" },
               border: "none",
               outline: "none",
-              padding: "3em",
+              padding: { sm: "0.5em", md: "3em" },
               gap: "2em",
+              overflowY: { sm: "scroll", md: "hidden" },
             }}
             component={Paper}
           >
@@ -69,7 +71,7 @@ const ProductModal = ({ product, open, handleClose }) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "2em",
-                width: "55%",
+                width: { sm: "100%", md: "55%" },
                 height: "inherit",
               }}
             >
@@ -106,7 +108,7 @@ const ProductModal = ({ product, open, handleClose }) => {
             </Box>
             <Box
               sx={{
-                maxWidth: "40%",
+                maxWidth: { sm: "100%", md: "40%" },
                 maxHeight: "inherit",
                 overflowY: "auto",
               }}
@@ -212,6 +214,7 @@ const ProductModal = ({ product, open, handleClose }) => {
                     Buy Now
                   </Button>
                   <Button
+                    onClick={() => handleAddToCart("ADD", product)}
                     sx={{
                       backgroundColor: "#f0f0f0",
                       color: "gray",

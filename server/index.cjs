@@ -22,6 +22,7 @@ app.use(
 
 //routes
 app.use("/auth", require("./routes/auth.route.cjs"));
+app.use("/user", require("./routes/users.route.cjs"));
 app.use("/products", require("./routes/products.route.cjs"));
 //server initiation
 const PORT = process.env.PORT;
