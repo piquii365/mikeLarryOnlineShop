@@ -1,10 +1,10 @@
 import { Facebook, Instagram, Star, WhatsApp } from "@mui/icons-material";
-import { Box, IconButton, Link, Typography } from "@mui/material";
+import { Box, IconButton, Link, Stack, Typography } from "@mui/material";
 const Footer = () => {
   return (
-    <Box
+    <Stack
       sx={{
-        width: "100%",
+        width: "inherit",
         backgroundColor: "#002c3e",
         color: "white",
         height: "30dvh",
@@ -57,7 +57,7 @@ const Footer = () => {
           <Star />
         </IconButton>
       </Box>
-    </Box>
+    </Stack>
   );
 };
 

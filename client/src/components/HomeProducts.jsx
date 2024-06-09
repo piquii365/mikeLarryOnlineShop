@@ -12,18 +12,18 @@ import {
 import ProductModal from "./ProductModal.jsx";
 const Product = styled(Card)({
   flex: 1,
-  width: { sm: "100%" },
-  minHeight: "45dvh",
+  minHeight: "45vmin",
   display: "flex",
   flexDirection: "column",
   boxShadow: "none",
   border: "1px solid #002c3e",
   borderRadius: "10px",
   padding: "0.5em",
+  marginBottom: 4,
 });
 const Products = styled(Box)({
   width: "inherit",
-  minHeight: "70dvh",
+  minHeight: "70vmin",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -42,7 +42,6 @@ const HomeProducts = () => {
     axios
       .get("/products/all-products")
       .then((result) => {
-        console.log(result.data);
         setProducts(result.data);
       })
       .catch((error) => {
@@ -78,7 +77,6 @@ const HomeProducts = () => {
   useEffect(() => {
     try {
       const storedItems = localStorage.getItem("CartItems");
-
       storedItems && setCartItems(JSON.parse(storedItems));
     } catch (error) {
       console.error(error);
@@ -139,10 +137,11 @@ const HomeProducts = () => {
       {products ? (
         <Products>
           <Typography
-            variant="h2"
+            variant="h4"
             sx={{
               fontFamily: "'Playfair Display', serif",
               fontWeight: "bolder",
+              fontSize: { sm: 10, md: 55 },
             }}
           >
             Products

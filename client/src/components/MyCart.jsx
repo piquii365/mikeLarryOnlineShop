@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, TextField, Typography } from "@mui/material";
 import {
   Menu,
   Table,
@@ -8,9 +8,11 @@ import {
   TableBody,
   IconButton,
   Button,
+  Collapse,
 } from "@mui/material";
 import { ShoppingCart, Remove, Add, Delete } from "@mui/icons-material";
-import { BASE_URL } from "../api/axios.js";
+import { BASE_URL, axiosPrivate } from "../api/axios.js";
+import { useState } from "react";
 const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
   const totalPrice = cartItems.reduce(
     (price, item) =>
@@ -18,6 +20,40 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
       item.quantity * (item.discount === 0 ? item.price : item.discount),
     0
   );
+  const [values, setValues] = useState({ email: "", phoneNumber: "" });
+  const handlePayment = (event) => {
+    event.preventDefault();
+    axiosPrivate
+      .post(`/${values.email}/multiple/payment`, cartItems)
+      .then((result) => {
+        if (result.data.success) {
+          location.assign(result.data.redirectUrl);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  const handleEcocashPayment = (event) => {
+    event.preventDefault();
+    if (values.phoneNumber) {
+      axiosPrivate
+        .post(`/${values.email}/${values.phoneNumber}/payment`, cartItems)
+        .then((result) => {
+          if (result.data.success) {
+            location.assign(result.data.redirectUrl);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+  const [ecocash, setEcocash] = useState(false);
+  const handleOpen = () => {
+    setEcocash(!ecocash);
+  };
+
   return (
     <>
       <Menu anchorEl={enchor} open={open} onClose={handleHide}>
@@ -129,29 +165,83 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                   </TableBody>
                 </Table>
                 <Box
+                  component={Paper}
                   sx={{
-                    display: "flex",
+                    display: { sm: "block", md: "flex" },
                     my: "1em",
-                    justifyContent: "flex-end",
+                    justifyContent: "center",
                     alignItems: "center",
                     width: "inherit",
                     gap: "1em",
+                    py: "2em",
                   }}
                 >
                   <Typography>Total Price: ${totalPrice}</Typography>
-                  <Button
-                    sx={{
-                      backgroundColor: "#002c3e",
-                      color: "white",
-                      padding: "0.5em 2em",
-                      "&:hover": {
-                        color: "#002c3e",
-                        border: "1px solid #002c3e",
-                      },
-                    }}
-                  >
-                    Pay Now
-                  </Button>
+                  <form onSubmit={handlePayment}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "1em",
+                      }}
+                    >
+                      <TextField
+                        onChange={(e) =>
+                          setValues({ ...values, email: e.target.value })
+                        }
+                        type="email"
+                        id="email"
+                        label="Email"
+                        size="small"
+                        required
+                      />
+                      <Button onClick={handleOpen}>Use Ecocash</Button>
+                      <Collapse in={ecocash} timeout="auto" unmountOnExit>
+                        <Box>
+                          <TextField
+                            onChange={(e) =>
+                              setValues({
+                                ...values,
+                                phoneNumber: e.target.value,
+                              })
+                            }
+                            id="phoneNumber"
+                            label="Phone Number"
+                            size="small"
+                          />
+                        </Box>
+                      </Collapse>
+                      <Button
+                        type="submit"
+                        sx={{
+                          backgroundColor: "#002c3e",
+                          color: "white",
+                          padding: "0.5em 2em",
+                          "&:hover": {
+                            color: "#002c3e",
+                            border: "1px solid #002c3e",
+                          },
+                        }}
+                      >
+                        Pay Now
+                      </Button>
+                      <Button
+                        disabled
+                        onClick={handleEcocashPayment}
+                        type="submit"
+                        sx={{
+                          color: "#002c3e",
+                          border: "1px solid #002c3e",
+                          padding: "0.5em 2em",
+                          "&:hover": {
+                            color: "#002c3e",
+                          },
+                        }}
+                      >
+                        pay With Ecocash
+                      </Button>
+                    </Box>
+                  </form>
                   <Button
                     onClick={() => handleCart("CLEAR", "")}
                     sx={{ backgroundColor: "#f0f0f0", padding: "0.5em 2em" }}

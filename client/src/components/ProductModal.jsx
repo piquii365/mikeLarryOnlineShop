@@ -50,22 +50,23 @@ const ProductModal = ({
     setImage(pic);
   };
   return (
-    <Box id="products">
+    <Box id="products" sx={{ width: "inherit" }}>
       <Suspense fallback={<Typography>Loading...</Typography>}>
         <Modal open={open} onClose={handleClose}>
           <Box
             sx={{
               position: "absolute",
+              boxSizing: "border-box",
               width: { xs: "100%", sm: "100%", md: "60%", lg: "60%" },
-              minHeight: "70dvh",
+              height: { xs: "80vmax", sm: "80vmax", md: "85dvh" },
               display: { sm: "block", md: "flex" },
               top: { sm: 0, md: "5%" },
               left: { sm: 0, md: "8%" },
               border: "none",
               outline: "none",
-              padding: { sm: "0.5em", md: "3em" },
+              padding: { xs: "0.5em", sm: "0.5em", md: "3em" },
               gap: "2em",
-              overflowY: { sm: "scroll", md: "hidden" },
+              overflowY: "auto",
             }}
             component={Paper}
           >
@@ -81,7 +82,7 @@ const ProductModal = ({
                 flexDirection: "column",
                 gap: "2em",
                 width: { sm: "100%", md: "55%" },
-                height: "inherit",
+                height: { xs: "fit-content", sm: "fit-content", md: "inherit" },
               }}
             >
               <Box sx={{ width: "100%", height: "50dvh" }}>
@@ -212,8 +213,15 @@ const ProductModal = ({
                   ))}
                 </Box>
                 <Divider />
-                <Box sx={{ display: "flex", marginTop: "1em", gap: "1em" }}>
+                <Box
+                  sx={{
+                    display: { xs: "block", sm: "block", md: "flex" },
+                    marginTop: "1em",
+                    gap: "1em",
+                  }}
+                >
                   <Button
+                    fullWidth
                     onClick={() =>
                       navigate(
                         "/payment",
@@ -224,6 +232,7 @@ const ProductModal = ({
                     sx={{
                       backgroundColor: "#002c3e",
                       color: "white",
+                      marginBottom: "1em",
                       padding: "0.8em 1em",
                       "&:hover": {
                         color: "#002c3e",
@@ -234,10 +243,12 @@ const ProductModal = ({
                     Buy Now
                   </Button>
                   <Button
+                    fullWidth
                     onClick={() => handleCart("ADD", product)}
                     sx={{
                       backgroundColor: "#f0f0f0",
                       color: "gray",
+                      marginBottom: "1em",
                       padding: "0.8em 1em",
                     }}
                     startIcon={<AddShoppingCart />}
@@ -245,11 +256,13 @@ const ProductModal = ({
                     Add To Cart
                   </Button>
                   <Button
+                    fullWidth
                     onClick={handleClickCart}
                     sx={{
                       backgroundColor: "#f0f0f0",
                       color: "gray",
                       padding: "0.8em 1em",
+                      marginBottom: "1em",
                     }}
                     startIcon={<ShoppingCart />}
                   >

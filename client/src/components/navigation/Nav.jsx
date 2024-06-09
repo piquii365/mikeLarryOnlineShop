@@ -162,12 +162,6 @@ const Nav = () => {
                 flexDirection: "column",
               }}
             >
-              <IconButton
-                onClick={handleHide}
-                sx={{ position: "absolute", top: 0, right: 0, color: "black" }}
-              >
-                <Close />
-              </IconButton>
               <Box>
                 <Button href="/" component={Link}>
                   <Logo src="/images/logo.png" />
@@ -214,6 +208,9 @@ const Nav = () => {
                   <NavLink href="/">PRODUCTS</NavLink>
                   <NavLink href="/">BLOG</NavLink>
                   <NavLink href="/">CONTACT</NavLink>
+                  <NavLink href="/">Sign Up</NavLink>
+                  <NavLink href="/">Sign In</NavLink>
+                  <Button onClick={handleHide}>Close</Button>
                 </Box>
               </Box>
             </Box>

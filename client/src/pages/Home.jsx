@@ -32,8 +32,9 @@ const ShopWithUs = styled(Box)({
 });
 const Papers = styled(Paper)({
   flex: 1,
+  marginBottom: 5,
   backgroundColor: "#002c3e",
-  height: "28dvh",
+  height: "15vmax",
   display: "flex",
   flexDirection: "column",
   gap: "1em",
@@ -119,17 +120,24 @@ const Home = () => {
       </HomePicture>
       <ShopWithUs>
         <Typography
-          variant={"h2"}
+          variant={"h4"}
           sx={{
             fontFamily: "'Playfair Display', serif",
             fontWeight: "bolder",
             color: "black",
+            fontSize: { sm: 10, md: 55 },
           }}
         >
           Why Shop With Us
         </Typography>
         <Divider variant="middle" sx={{ color: "white" }} />
-        <Box sx={{ width: "80%", display: "flex", gap: "3em" }}>
+        <Box
+          sx={{
+            width: "80%",
+            display: { sm: "block", md: "flex" },
+            gap: "3em",
+          }}
+        >
           <Papers>
             <DeliveryDining sx={{ fontSize: 40 }} />
             <Typography variant={"h5"} sx={{ fontWeight: "bold" }}>
@@ -153,10 +161,11 @@ const Home = () => {
       <HomeProducts />
       <Testimonies>
         <Typography
-          variant={"h2"}
+          variant={"h4"}
           sx={{
             fontFamily: "'Playfair Display', serif",
             fontWeight: "bolder",
+            fontSize: { sm: 10, md: 55 },
           }}
         >
           Customer&apos;s Testimonial
@@ -164,7 +173,7 @@ const Home = () => {
         <Box
           sx={{
             position: "relative",
-            width: "75%",
+            width: "90vmin",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -175,6 +184,7 @@ const Home = () => {
             onClick={() => handleScroll(-scrollAmount)}
             size="large"
             sx={{
+              display: { xs: "none", sm: "hidden" },
               color: "white",
               backgroundColor: "#002c3e",
               "&:hover": { color: "#002c3e" },
@@ -189,6 +199,7 @@ const Home = () => {
             onClick={() => handleScroll(scrollAmount)}
             size="large"
             sx={{
+              display: { xs: "none", sm: "hidden" },
               color: "white",
               backgroundColor: "#002c3e",
               "&:hover": { color: "#002c3e" },
@@ -243,11 +254,12 @@ const Home = () => {
       </Testimonies>
       <Subscribe>
         <Typography
-          variant={"h2"}
+          variant={"h4"}
           sx={{
             fontFamily: "'Playfair Display', serif",
             fontWeight: "bolder",
             color: "#002c3e",
+            fontSize: { sm: 10, md: 55 },
           }}
         >
           Subscribe To Get Discount Offers
@@ -274,7 +286,7 @@ const Home = () => {
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             sx={{
-              width: "50%",
+              width: { xs: "90%", sm: "90%", md: "50%" },
               border: "none",
               outline: "none",
               backgroundColor: "white",
@@ -286,7 +298,7 @@ const Home = () => {
               backgroundColor: "#002c3e",
               padding: "0.8em 1em",
               color: "white",
-              width: "20%",
+              width: { xs: "40%", sm: "40%", md: "20%" },
               fontWeight: "bold",
               fontSize: "large",
               "&:hover": { border: "1px solid black", color: "#002c3e" },
