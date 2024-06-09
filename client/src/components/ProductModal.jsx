@@ -1,4 +1,4 @@
-import { AddShoppingCart, Close } from "@mui/icons-material";
+import { AddShoppingCart, Close, ShoppingCart } from "@mui/icons-material";
 import {
   Box,
   IconButton,
@@ -11,8 +11,17 @@ import {
 } from "@mui/material";
 import { useState, Suspense, useEffect } from "react";
 import { BASE_URL } from "../api/axios.js";
-
-const ProductModal = ({ product, open, handleClose, handleAddToCart }) => {
+import { useNavigate } from "react-router-dom";
+import { replace } from "formik";
+const ProductModal = ({
+  product,
+  cartItems,
+  open,
+  handleClose,
+  handleCart,
+  handleClickCart,
+}) => {
+  const navigate = useNavigate();
   const [image, setImage] = useState();
   const [currentProduct, setCurrentProduct] = useState({
     name: "",
@@ -41,7 +50,7 @@ const ProductModal = ({ product, open, handleClose, handleAddToCart }) => {
     setImage(pic);
   };
   return (
-    <Box>
+    <Box id="products">
       <Suspense fallback={<Typography>Loading...</Typography>}>
         <Modal open={open} onClose={handleClose}>
           <Box
@@ -108,7 +117,7 @@ const ProductModal = ({ product, open, handleClose, handleAddToCart }) => {
             </Box>
             <Box
               sx={{
-                maxWidth: { sm: "100%", md: "40%" },
+                maxWidth: "55",
                 maxHeight: "inherit",
                 overflowY: "auto",
               }}
@@ -121,7 +130,11 @@ const ProductModal = ({ product, open, handleClose, handleAddToCart }) => {
               >
                 {currentProduct.name}
               </Typography>
-              <Rating defaultValue={currentProduct?.rating} readOnly />
+              <Typography sx={{ alignItems: "center", display: "flex" }}>
+                <Rating defaultValue={currentProduct?.rating} readOnly />
+                (58 reviews)
+              </Typography>
+
               {currentProduct.discount === 0 ? (
                 <Typography
                   sx={{
@@ -161,7 +174,7 @@ const ProductModal = ({ product, open, handleClose, handleAddToCart }) => {
                 >
                   Description
                 </Typography>
-                <Typography variant="body1" paragraph>
+                <Typography sx={{ width: "60%" }} variant="body1" paragraph>
                   {currentProduct.description}
                 </Typography>
               </Box>
@@ -201,10 +214,17 @@ const ProductModal = ({ product, open, handleClose, handleAddToCart }) => {
                 <Divider />
                 <Box sx={{ display: "flex", marginTop: "1em", gap: "1em" }}>
                   <Button
+                    onClick={() =>
+                      navigate(
+                        "/payment",
+                        { state: { product: product, cart: cartItems } },
+                        replace
+                      )
+                    }
                     sx={{
                       backgroundColor: "#002c3e",
                       color: "white",
-                      padding: "0.8em 2em",
+                      padding: "0.8em 1em",
                       "&:hover": {
                         color: "#002c3e",
                         border: "1px solid #002c3e",
@@ -214,15 +234,26 @@ const ProductModal = ({ product, open, handleClose, handleAddToCart }) => {
                     Buy Now
                   </Button>
                   <Button
-                    onClick={() => handleAddToCart("ADD", product)}
+                    onClick={() => handleCart("ADD", product)}
                     sx={{
                       backgroundColor: "#f0f0f0",
                       color: "gray",
-                      padding: "0.8em 2em",
+                      padding: "0.8em 1em",
                     }}
                     startIcon={<AddShoppingCart />}
                   >
                     Add To Cart
+                  </Button>
+                  <Button
+                    onClick={handleClickCart}
+                    sx={{
+                      backgroundColor: "#f0f0f0",
+                      color: "gray",
+                      padding: "0.8em 1em",
+                    }}
+                    startIcon={<ShoppingCart />}
+                  >
+                    View Cart
                   </Button>
                 </Box>
               </Box>

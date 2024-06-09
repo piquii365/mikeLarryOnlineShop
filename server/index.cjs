@@ -13,10 +13,18 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    method: ["GET", "PUT", "POST", "DELETE"],
+    origin: ["http://localhost:5173", "https://www.paynow.co.zw"],
+    method: ["GET", "PUT", "POST", "OPTIONS", "DELETE"],
     optionsSuccessStatus: 200,
     credentials: true,
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "Authorization",
+      "Options",
+    ],
   })
 );
 
@@ -24,6 +32,7 @@ app.use(
 app.use("/auth", require("./routes/auth.route.cjs"));
 app.use("/user", require("./routes/users.route.cjs"));
 app.use("/products", require("./routes/products.route.cjs"));
+app.use(require("./routes/paynow.routes.cjs"));
 //server initiation
 const PORT = process.env.PORT;
 const HOST = process.env.HOST;

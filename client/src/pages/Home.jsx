@@ -9,50 +9,26 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
-  CardContent,
-  CardMedia,
   Divider,
   IconButton,
   Paper,
-  Rating,
   styled,
   Typography,
   TextField,
-  Link,
 } from "@mui/material";
 import { useState, useRef } from "react";
 const HomePicture = styled(Box)({
   width: "inherit",
-  height: "90dvh",
+  height: { md: "90dvh", lg: "90dvh" },
 });
 const ShopWithUs = styled(Box)({
   width: "inherit",
-  height: "70dvh",
+  height: { md: "70dvh", lg: "70dvh" },
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  gap: "1em",
-});
-const Products = styled(Box)({
-  width: "inherit",
-  height: "70dvh",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "1em",
-});
-const Product = styled(Card)({
-  flex: 1,
-  height: "45dvh",
-  display: "flex",
-  flexDirection: "column",
-  boxShadow: "none",
-  border: "1px solid blue",
-  borderRadius: "10px",
-  padding: "0.5em",
+  gap: { xs: "0.2em", sm: "0.2em", md: "1em", lg: "1em" },
 });
 const Papers = styled(Paper)({
   flex: 1,
@@ -68,7 +44,7 @@ const Papers = styled(Paper)({
 const Testimonies = styled(Box)({
   width: "inherit",
   position: "relative",
-  height: "70dvh",
+  minHeight: { md: "70dvh" },
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -84,6 +60,7 @@ const Subscribe = styled(Box)({
   alignItems: "center",
   justifyContent: "center",
 });
+import HomeProducts from "../components/HomeProducts.jsx";
 import { axiosPrivate } from "../api/axios.js";
 const Home = () => {
   const [email, setEmail] = useState("");
@@ -173,126 +150,7 @@ const Home = () => {
           </Papers>
         </Box>
       </ShopWithUs>
-      <Products>
-        <Typography
-          variant={"h2"}
-          sx={{
-            fontFamily: "'Playfair Display', serif",
-            fontWeight: "bolder",
-          }}
-        >
-          Products
-        </Typography>
-        <Divider color="black" />
-        <Box sx={{ width: "80%", display: "flex", gap: "7em" }}>
-          <Product>
-            <CardMedia
-              image="/images/hooverboard1.png"
-              alt="HoverBoard"
-              sx={{ width: "inherit", height: "100%" }}
-            />
-            <CardContent>
-              <Rating defaultValue={5} readOnly />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "inherit",
-                }}
-              >
-                <Typography
-                  sx={{ fontWeight: "bolder", color: "black" }}
-                  variant="h6"
-                >
-                  HoverBoard
-                </Typography>
-                <Typography
-                  sx={{ fontWeight: "bolder", color: "black" }}
-                  variant="h6"
-                >
-                  $200
-                </Typography>
-              </Box>
-            </CardContent>
-          </Product>
-          <Product>
-            <CardMedia
-              image="/images/RC C1.png"
-              alt="Stunt car"
-              sx={{ width: "inherit", height: "100%" }}
-            />
-            <CardContent>
-              <Rating defaultValue={5} readOnly />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "inherit",
-                }}
-              >
-                <Typography
-                  sx={{ fontWeight: "bolder", color: "black" }}
-                  variant="h6"
-                >
-                  Stunt-Car
-                </Typography>
-                <Typography
-                  sx={{ fontWeight: "bolder", color: "black" }}
-                  variant="h6"
-                >
-                  $100
-                </Typography>
-              </Box>
-            </CardContent>
-          </Product>
-          <Product>
-            <CardMedia
-              image="/images/1714054948471.png"
-              alt="Stunt helicopter"
-              sx={{ width: "inherit", height: "100%" }}
-            />
-            <CardContent>
-              <Rating defaultValue={5} readOnly />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "inherit",
-                }}
-              >
-                <Typography
-                  sx={{ fontWeight: "bolder", color: "black" }}
-                  variant="h6"
-                >
-                  Helicopter
-                </Typography>
-                <Typography
-                  sx={{ fontWeight: "bolder", color: "black" }}
-                  variant="h6"
-                >
-                  $200
-                </Typography>
-              </Box>
-            </CardContent>
-          </Product>
-        </Box>
-        <Button
-          component={Link}
-          href="/products"
-          sx={{
-            backgroundColor: "#002c3e",
-            padding: "0.8em 1em",
-            color: "white",
-            "&:hover": { border: "1px solid black", color: "#002c3e" },
-          }}
-          size="large"
-        >
-          View All Products
-        </Button>
-      </Products>
+      <HomeProducts />
       <Testimonies>
         <Typography
           variant={"h2"}

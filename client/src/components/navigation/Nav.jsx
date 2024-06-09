@@ -11,9 +11,8 @@ import {
   Modal,
   Divider,
   Avatar,
-
 } from "@mui/material";
-
+import { Link as ReactLink, animateScroll as scroll } from "react-scroll";
 import { useState } from "react";
 const Logo = styled("img")({
   width: "200px",
@@ -91,7 +90,22 @@ const Nav = () => {
             <MenuItem onClick={handleClose}>ABOUT</MenuItem>
             <MenuItem onClick={handleClose}>TESTIMONIAL</MenuItem>
           </Menu>
-          <NavLink href="/products">PRODUCTS</NavLink>
+          <ReactLink
+            style={{
+              textDecoration: "none",
+              color: "black",
+              fontWeight: "bolder",
+              fontSize: "1.5rem",
+              fontFamily: "Helvetica, serif",
+              cursor: "pointer",
+            }}
+            smooth={true}
+            spy={true}
+            duration={700}
+            to="products"
+          >
+            PRODUCTS
+          </ReactLink>
           <NavLink href="/blog">BLOG</NavLink>
           <NavLink href="/contact">CONTACT</NavLink>
         </Box>

@@ -6,9 +6,10 @@ import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 import Contact from "./pages/Contact";
 import Register from "./pages/Register";
-import Products from "./pages/Products";
 import Nav from "./components/navigation/Nav";
 import Footer from "./components/Footer";
+import PayNow from "./pages/PayNow";
+import PaymentFailure from "./pages/PaymentFailure";
 const App = () => {
   return (
     <>
@@ -16,12 +17,13 @@ const App = () => {
         <Nav />
         <Routes>
           <Route path="/admin" element={<Admin />} />
+          <Route path="/payment/canceled" element={<PaymentFailure />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/payment" element={<PayNow />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/products" element={<Products />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

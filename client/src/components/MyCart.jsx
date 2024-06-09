@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { ShoppingCart, Remove, Add, Delete } from "@mui/icons-material";
 import { BASE_URL } from "../api/axios.js";
-const MyCart = ({ enchor, open, handleHide, cartItems, handleAddToCart }) => {
+const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
   const totalPrice = cartItems.reduce(
     (price, item) =>
       price +
@@ -110,17 +110,15 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleAddToCart }) => {
                           }}
                         >
                           <IconButton
-                            onClick={() => handleAddToCart("REMOVE", item)}
+                            onClick={() => handleCart("REMOVE", item)}
                           >
                             <Remove />
                           </IconButton>
-                          <IconButton
-                            onClick={() => handleAddToCart("ADD", item)}
-                          >
+                          <IconButton onClick={() => handleCart("ADD", item)}>
                             <Add />
                           </IconButton>
                           <IconButton
-                            onClick={() => handleAddToCart("DELETE", item)}
+                            onClick={() => handleCart("DELETE", item)}
                             sx={{ color: "red" }}
                           >
                             <Delete />
@@ -155,7 +153,7 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleAddToCart }) => {
                     Pay Now
                   </Button>
                   <Button
-                    onClick={() => handleAddToCart("CLEAR", "")}
+                    onClick={() => handleCart("CLEAR", "")}
                     sx={{ backgroundColor: "#f0f0f0", padding: "0.5em 2em" }}
                   >
                     Clear Cart
