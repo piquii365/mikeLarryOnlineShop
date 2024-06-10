@@ -1,4 +1,12 @@
-import { Box, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  ButtonGroup,
+  Divider,
+  Icon,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import {
   Menu,
   Table,
@@ -59,7 +67,8 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
       <Menu anchorEl={enchor} open={open} onClose={handleHide}>
         <Box
           sx={{
-            width: "70dvw",
+            boxSizing: "border-box",
+            width: "50vmax",
             minHeight: "80dvh",
             display: "flex",
             flexDirection: "column",
@@ -70,7 +79,8 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
             sx={{
               backgroundColor: "#002c3e",
               height: "8dvh",
-              width: "69dvw",
+              width: "100%",
+              marginRight: "1em",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -95,6 +105,7 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                   fontFamily: "'Playfair Display', serif",
                   fontWeight: "bolder",
                   color: "white",
+                  marginRight: "5em",
                 }}
               >
                 {cartItems && cartItems.length}
@@ -106,7 +117,19 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
               <Typography>No items added to cart yet</Typography>
             ) : (
               <Box>
-                <Table size="small" stickyHeader>
+                <Table
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "none",
+                      md: "block",
+                      lg: "block",
+                    },
+                    width: "inherit",
+                  }}
+                  size="small"
+                  stickyHeader
+                >
                   <TableHead>
                     <TableRow>
                       <TableCell component={"th"}>No</TableCell>
@@ -165,18 +188,99 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                   </TableBody>
                 </Table>
                 <Box
+                  sx={{
+                    display: {
+                      xs: "block",
+                      sm: "block",
+                      md: "none",
+                      lg: "none",
+                    },
+                    width: "inherit",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  {cartItems?.map((item, index) => (
+                    <Box key={index}>
+                      <Typography
+                        variant="h5"
+                        sx={{ fontWeight: "bolder" }}
+                        paragraph
+                      >
+                        {item?.name}
+                      </Typography>
+                      <img
+                        style={{ width: "80%" }}
+                        src={`${BASE_URL}/products/${item.images[0]}`}
+                      />
+                      <Box>
+                        <Typography
+                          variant="h5"
+                          sx={{ fontWeight: "bolder" }}
+                          paragraph
+                        >
+                          Price: ${item.price}
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "80%",
+                          }}
+                        >
+                          <Typography
+                            variant="h6"
+                            sx={{ fontWeight: "bolder" }}
+                          >
+                            Quantity: {item.quantity}
+                          </Typography>
+                          <ButtonGroup sx={{ fontWeight: "bolder" }}>
+                            <IconButton
+                              onClick={() => handleCart("REMOVE", item)}
+                            >
+                              <Remove />
+                            </IconButton>
+                            <IconButton onClick={() => handleCart("ADD", item)}>
+                              <Add />
+                            </IconButton>
+                            <IconButton
+                              onClick={() => handleCart("DELETE", item)}
+                              sx={{ color: "red" }}
+                            >
+                              <Delete />
+                            </IconButton>
+                          </ButtonGroup>
+                        </Box>
+                      </Box>
+                      <Divider />
+                    </Box>
+                  ))}
+                </Box>
+                <Box
                   component={Paper}
                   sx={{
                     display: { sm: "block", md: "flex" },
                     my: "1em",
                     justifyContent: "center",
                     alignItems: "center",
-                    width: "inherit",
+                    width: {
+                      xs: "80%",
+                      sm: "80%",
+                      md: "inherit",
+                      lg: "inherit",
+                    },
                     gap: "1em",
                     py: "2em",
+                    boxShadow: { xs: "none", sm: "none" },
                   }}
                 >
-                  <Typography>Total Price: ${totalPrice}</Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: "bolder" }}
+                    paragraph
+                  >
+                    Total Price: ${Math.round(totalPrice)}
+                  </Typography>
                   <form onSubmit={handlePayment}>
                     <Box
                       sx={{
@@ -189,16 +293,18 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                         onChange={(e) =>
                           setValues({ ...values, email: e.target.value })
                         }
+                        placeholder="Enter email to pay"
                         type="email"
                         id="email"
-                        label="Email"
                         size="small"
+                        helperText="Email is required to make payments"
                         required
                       />
                       <Button onClick={handleOpen}>Use Ecocash</Button>
                       <Collapse in={ecocash} timeout="auto" unmountOnExit>
                         <Box>
                           <TextField
+                            fullWidth
                             onChange={(e) =>
                               setValues({
                                 ...values,
@@ -211,6 +317,7 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                           />
                         </Box>
                       </Collapse>
+                      <img src="/images/paynow.PNG" />
                       <Button
                         type="submit"
                         sx={{
@@ -223,7 +330,7 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                           },
                         }}
                       >
-                        Pay Now
+                        Buy Now
                       </Button>
                       <Button
                         disabled
@@ -244,7 +351,12 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                   </form>
                   <Button
                     onClick={() => handleCart("CLEAR", "")}
-                    sx={{ backgroundColor: "#f0f0f0", padding: "0.5em 2em" }}
+                    sx={{
+                      backgroundColor: "#f0f0f0",
+                      padding: "0.5em 2em",
+                      marginTop: { xs: "2em", sm: "2em" },
+                      width: "20vmax",
+                    }}
                   >
                     Clear Cart
                   </Button>

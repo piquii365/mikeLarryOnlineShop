@@ -57,10 +57,15 @@ const ProductModal = ({
             sx={{
               position: "absolute",
               boxSizing: "border-box",
-              width: { xs: "100%", sm: "100%", md: "60%", lg: "60%" },
-              height: { xs: "80vmax", sm: "80vmax", md: "85dvh" },
+              width: { xs: "100%", sm: "100%", md: "65%", lg: "75%" },
+              height: {
+                xs: "90vmax",
+                sm: "90vmax",
+                md: "100dvh",
+                lg: "100dvh",
+              },
               display: { sm: "block", md: "flex" },
-              top: { sm: 0, md: "5%" },
+              top: { sm: 0, md: "2%" },
               left: { sm: 0, md: "8%" },
               border: "none",
               outline: "none",
@@ -81,8 +86,8 @@ const ProductModal = ({
                 display: "flex",
                 flexDirection: "column",
                 gap: "2em",
-                width: { sm: "100%", md: "55%" },
-                height: { xs: "fit-content", sm: "fit-content", md: "inherit" },
+                width: { sm: "100%", md: "60%" },
+                height: "fit-content",
               }}
             >
               <Box sx={{ width: "100%", height: "50dvh" }}>

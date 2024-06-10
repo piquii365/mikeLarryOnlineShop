@@ -135,7 +135,7 @@ const HomeProducts = () => {
   return (
     <>
       {products ? (
-        <Products>
+        <Products id="products">
           <Typography
             variant="h4"
             sx={{

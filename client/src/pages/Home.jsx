@@ -32,9 +32,9 @@ const ShopWithUs = styled(Box)({
 });
 const Papers = styled(Paper)({
   flex: 1,
-  marginBottom: 5,
+  marginBottom: 10,
   backgroundColor: "#002c3e",
-  height: "15vmax",
+  height: "21vmax",
   display: "flex",
   flexDirection: "column",
   gap: "1em",
@@ -109,7 +109,7 @@ const Home = () => {
     }
   };
   return (
-    <Box sx={{ width: "98dvw" }}>
+    <Box sx={{ width: "98dvw", boxSizing: "border-box" }}>
       <HomePicture>
         <img
           width={"100%"}

@@ -1,63 +1,173 @@
-import { Facebook, Instagram, Star, WhatsApp } from "@mui/icons-material";
-import { Box, IconButton, Link, Stack, Typography } from "@mui/material";
+import {
+  Facebook,
+  Instagram,
+  Star,
+  WhatsApp,
+  Phone,
+  LocationOn,
+  Mail,
+} from "@mui/icons-material";
+import {
+  Box,
+  IconButton,
+  Link,
+  Typography,
+  Button,
+  Divider,
+} from "@mui/material";
 const Footer = () => {
   return (
-    <Stack
+    <Box
       sx={{
-        width: "inherit",
+        width: "100%",
         backgroundColor: "#002c3e",
         color: "white",
-        height: "30dvh",
-        display: "flex",
-        justifyContent: "center",
+        minHeight: "50dvh",
+        display: { xs: "block", sm: "block", md: "flex" },
+        flexDirection: "column",
         alignItems: "center",
         gap: "1em",
-        flexDirection: "column",
+        paddingLeft: { sm: "0.5em", md: "5em" },
+        boxSizing: "border-box",
+        overflowX: "hidden",
       }}
     >
-      <Typography>
-        © 2024 All Rights Reserved By Mike Larry Incorporated
-      </Typography>
-      <Typography>Sponsored by JK</Typography>
-      <Box>
-        <IconButton
-          size="large"
-          sx={{ color: "white" }}
-          href={"https://wa.me/c/263778275093"}
-          component={Link}
+      <Box
+        sx={{
+          display: { sm: "block", md: "flex" },
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "1em",
+          paddingLeft: "5em",
+          width: "100%",
+        }}
+      >
+        <Box
+          sx={{
+            width: { xs: "100%", sm: "100%", md: "20%", lg: "20%" },
+            display: "flex",
+            flexDirection: "column",
+            gap: "1em",
+            color: "white",
+          }}
         >
-          <WhatsApp />
-        </IconButton>
-        <IconButton
-          size="large"
-          sx={{ color: "white" }}
-          href={"https://www.facebook.com/profile.php?id=100089821803271"}
-          component={Link}
-        >
-          <Facebook />
-        </IconButton>
-        <IconButton
-          size="large"
-          sx={{ color: "white" }}
-          href={
-            "https://www.instagram.com/mike_larry_lnc?igsh=eGtnbjd1cXp0MTFh"
-          }
-          component={Link}
-        >
-          <Instagram />
-        </IconButton>
-        <IconButton
-          size="large"
-          sx={{ color: "white" }}
-          href={
-            "https://www.tiktok.com/@mike_larry_lncorporated?_t=8jFA3QZJdx7&_r=1"
-          }
-          component={Link}
-        >
-          <Star />
-        </IconButton>
+          <Typography variant="h3">...</Typography>
+          <Button
+            sx={{ color: "white", width: "fit-content" }}
+            startIcon={<LocationOn />}
+            component={Link}
+          >
+            Location
+          </Button>
+          <Button
+            sx={{ color: "white", width: "fit-content" }}
+            startIcon={<Phone />}
+            component={Link}
+            href={"tel:+2637778275093"}
+          >
+            Call +2637 778275093
+          </Button>
+          <Button
+            sx={{ color: "white", width: "fit-content" }}
+            startIcon={<Mail />}
+            component={Link}
+            href={"mailto:mikelarrylnc4@gmail.com"}
+          >
+            mikelarrylnc4@gmail.com
+          </Button>
+        </Box>
+        <Box sx={{ width: { xs: "100%", sm: "100%", md: "20%", lg: "20%" } }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1em",
+            }}
+          >
+            <Typography
+              sx={{
+                all: "unset",
+                fontWeight: "bolder",
+                fontSize: 40,
+                cursor: "pointer",
+              }}
+              href="/blog"
+              variant="h5"
+              component={Link}
+            >
+              Mike Larry
+            </Typography>
+            <Typography paragraph>
+              illuminate your world with brilliant experiences from vibrant
+              moments to mesmerising lifestyle
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              width: "inherit",
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <IconButton
+              size="large"
+              sx={{ color: "white" }}
+              href={"https://wa.me/c/263778275093"}
+              component={Link}
+            >
+              <WhatsApp />
+            </IconButton>
+            <IconButton
+              size="large"
+              sx={{ color: "white" }}
+              href={"https://www.facebook.com/profile.php?id=100089821803271"}
+              component={Link}
+            >
+              <Facebook />
+            </IconButton>
+            <IconButton
+              size="large"
+              sx={{ color: "white" }}
+              href={
+                "https://www.instagram.com/mike_larry_lnc?igsh=eGtnbjd1cXp0MTFh"
+              }
+              component={Link}
+            >
+              <Instagram />
+            </IconButton>
+            <IconButton
+              size="large"
+              sx={{ color: "white" }}
+              href={
+                "https://www.tiktok.com/@mike_larry_lncorporated?_t=8jFA3QZJdx7&_r=1"
+              }
+              component={Link}
+            >
+              <Star />
+            </IconButton>
+          </Box>
+        </Box>
       </Box>
-    </Stack>
+      <Divider
+        color="white"
+        variant="middle"
+        sx={{ width: { xs: "90%", sm: "90%", md: "50%", lg: "50%" } }}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          marginBottom: "2em",
+        }}
+      >
+        <Typography>
+          © 2024 All Rights Reserved By Mike Larry Incorporated
+        </Typography>
+        <Typography>Powered by JK</Typography>
+      </Box>
+    </Box>
   );
 };
 
