@@ -12,7 +12,7 @@ const Contact = () => {
       sx={{
         boxSizing: "border-box",
         width: "100%",
-        minHeight: "100dvh",
+        height: { xs: "70dvh", sm: "70dvh", md: "130dvh" },
       }}
     >
       <Box
@@ -41,7 +41,7 @@ const Contact = () => {
           alignItems: "center",
           flexDirection: "column",
           height: "100%",
-          padding: "5em 0",
+          padding: "1em 0",
         }}
       >
         <Box

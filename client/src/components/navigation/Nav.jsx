@@ -11,8 +11,9 @@ import {
   Modal,
   Divider,
   Avatar,
+  Typography,
 } from "@mui/material";
-import { Link as ReactLink, animateScroll as scroll } from "react-scroll";
+import { Link as ReactLink } from "react-scroll";
 import { useState } from "react";
 const Logo = styled("img")({
   width: "200px",
@@ -61,9 +62,20 @@ const Nav = () => {
         }}
       >
         <Box>
-          <Button href="/" component={Link}>
-            <Logo src="/images/logo.png" />
-          </Button>
+          <Typography
+            component={Link}
+            href="/"
+            variant="h4"
+            sx={{
+              color: "#002c3e",
+              fontWeight: "bolder",
+              size: 200,
+              textDecoration: "none",
+              cursor: "pointer",
+            }}
+          >
+            MIKE LARRY INC
+          </Typography>
         </Box>
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: "3em" }}>
           <NavLink href="/">HOME</NavLink>
@@ -133,16 +145,6 @@ const Nav = () => {
           </Tooltip>
         </Box>
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
-          <Tooltip title="cart">
-            <IconButton sx={{ color: "black" }} size="large">
-              <ShoppingCart />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="search">
-            <IconButton sx={{ color: "black" }} size="large">
-              <Search />
-            </IconButton>
-          </Tooltip>
           <IconButton size="large" onClick={handleShow}>
             <List />
           </IconButton>
@@ -205,11 +207,11 @@ const Nav = () => {
                     <MenuItem onClick={handleClose}>ABOUT</MenuItem>
                     <MenuItem onClick={handleClose}>TESTIMONIAL</MenuItem>
                   </Menu>
-                  <NavLink href="/">PRODUCTS</NavLink>
-                  <NavLink href="/">BLOG</NavLink>
-                  <NavLink href="/">CONTACT</NavLink>
-                  <NavLink href="/">Sign Up</NavLink>
-                  <NavLink href="/">Sign In</NavLink>
+                  <NavLink href="#products">PRODUCTS</NavLink>
+                  <NavLink href="/blog">BLOG</NavLink>
+                  <NavLink href="/contact">CONTACT</NavLink>
+                  <NavLink href="/login">Sign Up</NavLink>
+                  <NavLink href="/register">Sign In</NavLink>
                   <Button onClick={handleHide}>Close</Button>
                 </Box>
               </Box>

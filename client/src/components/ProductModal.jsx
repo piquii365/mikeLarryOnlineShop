@@ -86,7 +86,7 @@ const ProductModal = ({
                 display: "flex",
                 flexDirection: "column",
                 gap: "2em",
-                width: { sm: "100%", md: "60%" },
+                width: { sm: "100%", md: "35%" },
                 height: "fit-content",
               }}
             >
@@ -123,7 +123,7 @@ const ProductModal = ({
             </Box>
             <Box
               sx={{
-                maxWidth: "55",
+                width: "100%",
                 maxHeight: "inherit",
                 overflowY: "auto",
               }}
@@ -180,9 +180,11 @@ const ProductModal = ({
                 >
                   Description
                 </Typography>
-                <Typography sx={{ width: "60%" }} variant="body1" paragraph>
-                  {currentProduct.description}
-                </Typography>
+                <pre>
+                  <Typography sx={{ width: "60%" }} variant="body1" paragraph>
+                    {currentProduct.description}
+                  </Typography>
+                </pre>
               </Box>
               <Box>
                 <Typography
@@ -252,7 +254,8 @@ const ProductModal = ({
                     onClick={() => handleCart("ADD", product)}
                     sx={{
                       backgroundColor: "#f0f0f0",
-                      color: "gray",
+                      color: "#002c3e",
+                      border: "1px solid #002c3e",
                       marginBottom: "1em",
                       padding: "0.8em 1em",
                     }}
@@ -265,7 +268,8 @@ const ProductModal = ({
                     onClick={handleClickCart}
                     sx={{
                       backgroundColor: "#f0f0f0",
-                      color: "gray",
+                      color: "#002c3e",
+                      border: "1px solid #002c3e",
                       padding: "0.8em 1em",
                       marginBottom: "1em",
                     }}

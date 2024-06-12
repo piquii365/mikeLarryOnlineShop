@@ -1,9 +1,10 @@
 const { Paynow } = require("paynow");
 const { v4: refrence } = require("uuid");
-const INTEGRATION_ID = 18643;
-const INTEGRATION_KEY = "c7bd2623-9f65-48f6-bd77-0819f080cad1";
-const resultUrl = "http://localhost:3001/payment/status";
-const returnUrl = "http://localhost:5173/";
+const Order = require("../models/oders.cjs");
+const INTEGRATION_ID = process.env.PAYNOW_INTERGRATION_ID;
+const INTEGRATION_KEY = process.env.PAYNOW_INTERGRATION_KEY;
+const resultUrl = process.env.RESULT_URL;
+const returnUrl = process.env.RETURN_URL;
 const integration = async (req, res) => {
   const ref = refrence();
   let paynow = new Paynow(INTEGRATION_ID, INTEGRATION_KEY);
@@ -12,11 +13,26 @@ const integration = async (req, res) => {
   try {
     if (req.body) {
       const { email } = req.params;
-      const { item, price, quantity } = req.body;
+      const { item, price, quantity, color, address, phoneNumber } = req.body;
       let payment = paynow.createPayment(ref, email);
       payment.add(item, price, quantity);
       const result = await paynow.send(payment);
-      res.status(200).json(result);
+      if (result.success) {
+        const order = new Order({
+          items: [{ item: item, color: color, quantity }],
+          buyer: email,
+          location: address,
+          paymentReference: ref,
+          phoneNumber: phoneNumber,
+        });
+        let pollUrl = result.pollUrl;
+        let status = paynow.pollTransaction(pollUrl);
+        console.log(status);
+        await order.save();
+        res.status(200).json(result);
+      } else {
+        res.status(200).json({ error: "Payment failure" });
+      }
     } else {
       res.status(200).json({ error: "Body cannot be empty" });
     }

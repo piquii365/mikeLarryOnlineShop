@@ -1,21 +1,25 @@
 import { Button, TextField, Typography, Box, Card, Link } from "@mui/material";
-import { Formik, Form } from "formik";
+import { Formik, Form, replace } from "formik";
 import { LoginValidationSchema } from "../middleware/LoginValidationSchema.js";
 import axios from "../api/axios.js";
 import { useState } from "react";
-//import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [error, setError] = useState("");
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleSubmit = (values) => {
     axios
       .post("/auth/user/login", values)
       .then((result) => {
+        console.log(result.data);
         if (result.data.status) {
-          setError("User Found");
+          navigate(
+            "/profile",
+            { state: { username: result.data.username } },
+            replace
+          );
         } else {
-          setError("User Not Found");
+          setError(result.data.Result);
         }
       })
       .catch((error) => console.log(error));
@@ -36,7 +40,6 @@ const Login = () => {
           "&:hover": {
             boxShadow:
               "20.6px 8.6px 37.8px -31px rgba(0, 0, 0, 0.006),38px 15.8px 65.4px -31px rgba(0, 0, 0, 0.014),54.4px 22.6px 89.5px -31px rgba(0, 0, 0, 0.023),70.7px 29.4px 112.2px -31px rgba(0, 0, 0, 0.033),87.3px 36.3px 134.6px -31px rgba(0, 0, 0, 0.045),104.9px 43.7px 157.1px -31px rgba(0, 0, 0, 0.058),125px 52px 180px -31px rgba(0, 0, 0, 0.07)",
-            minWidth: "26%",
           },
         }}
       >

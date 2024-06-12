@@ -54,7 +54,7 @@ const addUser = async (req, res) => {
 const signAdmin = async (req, res) => {
   try {
     const admin = await Admin.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.email }],
+      $or: [{ username: req.body.email }, { email: req.body.email }],
     }).exec();
     if (admin) {
       if (await bcrypt.compare(req.body.password, admin.password)) {
@@ -93,11 +93,11 @@ const signAdmin = async (req, res) => {
           accessToken: accessToken,
         });
       } else {
-        res.status(403).json({ status: false, Result: "Incorrect password" });
+        res.status(200).json({ status: false, Result: "Incorrect password" });
       }
     } else {
       res
-        .status(404)
+        .status(200)
         .json({ status: false, Result: "Username or email not registered" });
     }
   } catch (error) {
@@ -108,7 +108,7 @@ const signAdmin = async (req, res) => {
 const signUser = async (req, res) => {
   try {
     const user = await Users.findOne({
-      $or: [{ username: req.body.username }, { email: req.body.email }],
+      $or: [{ username: req.body.email }, { email: req.body.email }],
     }).exec();
     if (user) {
       if (await bcrypt.compare(req.body.password, user.password)) {

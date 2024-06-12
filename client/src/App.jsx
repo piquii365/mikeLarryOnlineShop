@@ -10,15 +10,34 @@ import Nav from "./components/navigation/Nav";
 import Footer from "./components/Footer";
 import PayNow from "./pages/PayNow";
 import PaymentFailure from "./pages/PaymentFailure";
+import Profile from "./pages/Profile";
+import AdminLogin from "./components/administration/AdminLogin";
+import AdminRegister from "./components/administration/AdminRegister";
+import Products from "./components/administration/Products";
+import UpdateProduct from "./components/administration/UpdateProduct";
+import Orders from "./components/administration/Orders";
+
 const App = () => {
   return (
     <>
       <Router>
         <Nav />
         <Routes>
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin">
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<Admin />}>
+              <Route path="/admin/dashboard/products" element={<Products />} />
+              <Route path="/admin/dashboard/orders" element={<Orders />} />
+              <Route
+                path="/admin/dashboard/update"
+                element={<UpdateProduct />}
+              />
+            </Route>
+            <Route path="/admin/register" element={<AdminRegister />} />
+          </Route>
           <Route path="/payment/canceled" element={<PaymentFailure />} />
           <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/payment" element={<PayNow />} />
           <Route path="/blog" element={<Blog />} />

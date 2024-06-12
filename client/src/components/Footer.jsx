@@ -19,7 +19,7 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        width: "100%",
+        width: { xs: "100dvw", sm: "90vhw", md: "100%" },
         backgroundColor: "#002c3e",
         color: "white",
         minHeight: "50dvh",
@@ -27,7 +27,7 @@ const Footer = () => {
         flexDirection: "column",
         alignItems: "center",
         gap: "1em",
-        paddingLeft: { sm: "0.5em", md: "5em" },
+        paddingLeft: { sm: "0.2em", md: "5em" },
         boxSizing: "border-box",
         overflowX: "hidden",
       }}
@@ -38,8 +38,8 @@ const Footer = () => {
           flexDirection: "row",
           alignItems: "center",
           gap: "1em",
-          paddingLeft: "5em",
-          width: "100%",
+          paddingLeft: "2em",
+          width: { xs: "80%", md: "100%" },
         }}
       >
         <Box
@@ -68,7 +68,11 @@ const Footer = () => {
             Call +2637 778275093
           </Button>
           <Button
-            sx={{ color: "white", width: "fit-content" }}
+            sx={{
+              color: "white",
+              width: "fit-content",
+              textTransform: "lowercase",
+            }}
             startIcon={<Mail />}
             component={Link}
             href={"mailto:mikelarrylnc4@gmail.com"}
@@ -76,12 +80,22 @@ const Footer = () => {
             mikelarrylnc4@gmail.com
           </Button>
         </Box>
-        <Box sx={{ width: { xs: "100%", sm: "100%", md: "20%", lg: "20%" } }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1em",
+            alignItems: "center",
+            width: { xs: "100%", sm: "100%", md: "50%", lg: "50%" },
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               gap: "1em",
+              alignItems: "center",
+              width: "100%",
             }}
           >
             <Typography
@@ -97,16 +111,22 @@ const Footer = () => {
             >
               Mike Larry
             </Typography>
-            <Typography paragraph>
+            <Typography
+              sx={{ width: { xs: "100%", sm: "100%", md: "40%", lg: "40%" } }}
+              paragraph
+            >
               illuminate your world with brilliant experiences from vibrant
-              moments to mesmerising lifestyle
+              moments to mesmerizing lifestyle
             </Typography>
           </Box>
           <Box
             sx={{
-              width: "inherit",
               display: "flex",
               flexDirection: "row",
+              gap: "1em",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
             }}
           >
             <IconButton

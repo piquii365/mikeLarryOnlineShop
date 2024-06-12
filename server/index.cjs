@@ -31,6 +31,7 @@ app.use(
 //routes
 app.use("/auth", require("./routes/auth.route.cjs"));
 app.use("/user", require("./routes/users.route.cjs"));
+app.use("/orders", require("./routes/orders.routes.cjs"));
 app.use("/products", require("./routes/products.route.cjs"));
 app.use(require("./routes/paynow.routes.cjs"));
 //server initiation

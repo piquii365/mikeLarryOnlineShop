@@ -5,7 +5,7 @@ router.route("/admin/login").post(handleAuth.signAdmin);
 router.route("/admin/signup").post(handleAuth.addAdmin);
 router.route("/user/login").post(handleAuth.signUser);
 router.route("/user/signup").post(handleAuth.addUser);
-router.route("/admin/logout").post(handleAuth.logoutAdmin);
+router.route("/admin/logout").get(handleAuth.logoutAdmin);
 router.route("/user/logout").post(handleAuth.logoutUser);
 router.route("/admin/refresh").post(handleAuth.refreshAdmin);
 router.route("/user/refresh").post(handleAuth.refreshUser);

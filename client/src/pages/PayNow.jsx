@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import { Formik, Form } from "formik";
 import {
   Box,
   Typography,
@@ -7,9 +8,9 @@ import {
   ButtonGroup,
   Button,
   IconButton,
-  Divider,
   TextField,
   Paper,
+  Autocomplete,
 } from "@mui/material";
 import { axiosPrivate, BASE_URL } from "../api/axios.js";
 import { Add, Remove } from "@mui/icons-material";
@@ -17,9 +18,11 @@ const PayNow = () => {
   const run = useRef(false);
   const [cart, setCart] = useState([]);
   const { state } = useLocation();
+
   const [product, setProduct] = useState({
     name: "",
     price: 0,
+    color: [],
     image: "",
     description: "",
     category: "",
@@ -27,10 +30,14 @@ const PayNow = () => {
     quantity: 1,
     discount: 0,
   });
-  const [currentPrice, setCurrentPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState();
+
   const [quantity, setQuantity] = useState(0);
-  const [email, setEmail] = useState("");
+  const initialValues = {
+    email: "",
+    color: [],
+    address: "",
+    phoneNumber: "",
+  };
   //store product
   useEffect(() => {
     try {
@@ -60,6 +67,7 @@ const PayNow = () => {
       ? setProduct({
           ...product,
           name: state.product.name,
+          color: state.product.color,
           price: state.product.price,
           image: state.product.images[0],
           description: state.product.description,
@@ -70,12 +78,6 @@ const PayNow = () => {
       : null;
     state.cart ? setCart(state.cart) : null;
     setQuantity(1);
-    setCurrentPrice(
-      state.product.discount !== 0
-        ? state.product.discount
-        : state.product.price
-    );
-    setTotalPrice(currentPrice);
   }, []);
 
   const handleQuantity = (action) => {
@@ -84,21 +86,21 @@ const PayNow = () => {
     } else if (action === "SUB") {
       setQuantity((prev) => prev - 1);
     }
-    setTotalPrice(currentPrice * quantity);
   };
-  const handlePurchase = (event) => {
-    event.preventDefault();
-    console.log(product);
-    const values = {
+  const handlePurchase = (values) => {
+    const finalValues = {
+      color: values.color,
+      address: values.address,
+      phoneNumber: values.phoneNumber,
       item: product.name,
       quantity: quantity,
       price: product.discount === 0 ? product.price : product.discount,
     };
     axiosPrivate
-      .post(`/${email}/payment`, values)
+      .post(`/${values.email}/payment`, finalValues)
       .then((result) => {
         if (result.data.success) {
-          console.log(result.data);
+          location.assign(result.data.redirectUrl);
         }
       })
       .catch((error) => console.log(error));
@@ -106,16 +108,6 @@ const PayNow = () => {
   return (
     <Box sx={{ width: "inherit", minHeight: "90dvh", padding: "0.5em" }}>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Typography
-          variant={"h4"}
-          sx={{
-            fontFamily: "'Playfair Display', serif",
-            fontWeight: "bolder",
-            color: "#002c3e",
-          }}
-        >
-          Purchase Single Product
-        </Typography>
         {product == null ? (
           <Typography>Loading</Typography>
         ) : (
@@ -150,7 +142,11 @@ const PayNow = () => {
               >
                 {product.name}
               </Typography>
-              <Rating defaultValue={5} readOnly />
+              <Box sx={{ display: "flex" }}>
+                <Rating defaultValue={5} readOnly />
+                <Typography>(58 Reviews)</Typography>
+              </Box>
+
               <Typography
                 variant={"h4"}
                 sx={{
@@ -174,20 +170,22 @@ const PayNow = () => {
                 >
                   Description
                 </Typography>
-                <Typography
-                  sx={{
-                    width: {
-                      xs: "inherit",
-                      sm: "inherit",
-                      md: "80%",
-                      lg: "80%",
-                    },
-                  }}
-                  variant={"body2"}
-                  paragraph
-                >
-                  {product.description}
-                </Typography>
+                <pre>
+                  <Typography
+                    sx={{
+                      width: {
+                        xs: "inherit",
+                        sm: "inherit",
+                        md: "80%",
+                        lg: "80%",
+                      },
+                    }}
+                    variant={"body2"}
+                    paragraph
+                  >
+                    {product.description}
+                  </Typography>
+                </pre>
               </Box>
               <Box
                 sx={{
@@ -206,36 +204,33 @@ const PayNow = () => {
                   >
                     Quantity:{quantity}
                   </Typography>
-                  <Typography
-                    variant={"h6"}
-                    sx={{
-                      fontWeight: "bolder",
-                    }}
-                  >
-                    Total Price:{totalPrice}
-                  </Typography>
-                </Box>
-                <Divider />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    padding: "0.5em",
-                    gap: "1em",
-                  }}
-                >
-                  <form>
-                    <TextField id="variant" label="Color" size="small" />
-                  </form>
                   <ButtonGroup>
-                    <IconButton onClick={() => handleQuantity("ADD")}>
+                    <IconButton
+                      sx={{ color: "#002c3e" }}
+                      onClick={() => handleQuantity("ADD")}
+                    >
                       <Add />
                     </IconButton>
-                    <IconButton onClick={() => handleQuantity("SUB")}>
+                    <IconButton
+                      sx={{ color: "#002c3e" }}
+                      disabled={quantity === 1 ? true : false}
+                      onClick={() => handleQuantity("SUB")}
+                    >
                       <Remove />
                     </IconButton>
                   </ButtonGroup>
                 </Box>
+                {cart ? (
+                  <Box>
+                    <Typography>
+                      You have {cart.length} item in your cart
+                    </Typography>
+                    <ButtonGroup fullWidth>
+                      <Button>View Cart</Button>
+                      <Button>Add to Cart</Button>
+                    </ButtonGroup>
+                  </Box>
+                ) : null}
               </Box>
             </Box>
             <Box
@@ -248,31 +243,78 @@ const PayNow = () => {
             >
               <Typography>Payment Details</Typography>
               <Box>
-                <form>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "1em",
-                    }}
-                  >
-                    <TextField
-                      id="email"
-                      type="email"
-                      label="Email"
-                      size="small"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Button
-                      onClick={handlePurchase}
-                      variant="contained"
-                      type="submit"
-                      size="small"
-                    >
-                      Pay
-                    </Button>
-                  </Box>
-                </form>
+                <Formik onSubmit={handlePurchase} initialValues={initialValues}>
+                  {({
+                    handleSubmit,
+                    handleChange,
+                    handleBlur,
+                    setFieldValue,
+                  }) => (
+                    <Form onSubmit={handleSubmit}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "1em",
+                        }}
+                      >
+                        <Autocomplete
+                          fullWidth
+                          disablePortal
+                          size="small"
+                          id="color"
+                          onBlur={handleBlur}
+                          required
+                          autoHighlight
+                          autoSelect
+                          freeSolo
+                          disableClearable
+                          onChange={(e, value) => setFieldValue("color", value)}
+                          options={product.color}
+                          renderInput={(params) => (
+                            <TextField {...params} label="Color" />
+                          )}
+                        />
+                        <TextField
+                          id="email"
+                          type="email"
+                          label="Email"
+                          size="small"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                        <TextField
+                          id="address"
+                          label="Address"
+                          size="small"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                        <TextField
+                          id="phoneNumber"
+                          label="Phone Number"
+                          size="small"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                        <img src="/images/paynow.PNG" alt="Payment methods" />
+                        <Button
+                          sx={{
+                            backgroundColor: "#002c3e",
+                            color: "white",
+                            fontWeight: "bolder",
+                            "&:hover": { color: "#002c3e" },
+                          }}
+                          variant="contained"
+                          type="submit"
+                          size="small"
+                        >
+                          Buy Now
+                        </Button>
+                      </Box>
+                    </Form>
+                  )}
+                </Formik>
               </Box>
             </Box>
           </Box>

@@ -11,19 +11,19 @@ import {
 } from "@mui/material";
 import ProductModal from "./ProductModal.jsx";
 const Product = styled(Card)({
-  flex: 1,
   minHeight: "45vmin",
+  width: "76vmin",
   display: "flex",
   flexDirection: "column",
   boxShadow: "none",
   border: "1px solid #002c3e",
   borderRadius: "10px",
   padding: "0.5em",
-  marginBottom: 4,
+  marginBottom: 15,
 });
 const Products = styled(Box)({
-  width: "inherit",
   minHeight: "70vmin",
+  minWidth: "100%",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -168,8 +168,8 @@ const HomeProducts = () => {
                     image={`${BASE_URL}/products/${product?.images[0]}`}
                     alt={product?.name}
                     sx={{
-                      minWidth: { sm: "inherit", md: "inherit" },
-                      height: { sm: "10dvh", md: "100%" },
+                      minWidth: { sm: "90%", md: "inherit" },
+                      height: { xs: "30dvh", sm: "10dvh", md: "100%" },
                     }}
                   />
                   <CardContent>
