@@ -3,5 +3,8 @@ const handleOrders = require("../controllers/orders.controller.cjs");
 const router = Router();
 router.route("/all").get(handleOrders.getOrders);
 router.route("/multiple").get(handleOrders.getMultipleOrders);
+router.route("/update/:id").put(handleOrders.updateMultiOrder);
+router.route("/single/update/:id").put(handleOrders.updateSingleOrder);
+router.route("/delete/:id").delete(handleOrders.handleDelete);
 router.route("/delete/:id").delete(handleOrders.handleDelete);
 module.exports = router;

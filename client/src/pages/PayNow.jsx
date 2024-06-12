@@ -12,13 +12,14 @@ import {
   Paper,
   Autocomplete,
 } from "@mui/material";
+
 import { axiosPrivate, BASE_URL } from "../api/axios.js";
 import { Add, Remove } from "@mui/icons-material";
+import MyCart from "../components/MyCart.jsx";
 const PayNow = () => {
   const run = useRef(false);
   const [cart, setCart] = useState([]);
   const { state } = useLocation();
-
   const [product, setProduct] = useState({
     name: "",
     price: 0,
@@ -104,6 +105,15 @@ const PayNow = () => {
         }
       })
       .catch((error) => console.log(error));
+  };
+  //cart
+  const [anchorE2, setAnchorE2] = useState(null);
+  const showCart = Boolean(anchorE2);
+  const handleClickCart = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
+  const handleHideCart = () => {
+    setAnchorE2(null);
   };
   return (
     <Box sx={{ width: "inherit", minHeight: "90dvh", padding: "0.5em" }}>
@@ -225,10 +235,15 @@ const PayNow = () => {
                     <Typography>
                       You have {cart.length} item in your cart
                     </Typography>
-                    <ButtonGroup fullWidth>
-                      <Button>View Cart</Button>
-                      <Button>Add to Cart</Button>
-                    </ButtonGroup>
+                    <Button fullWidth onClick={handleClickCart}>
+                      View Cart
+                    </Button>
+                    <MyCart
+                      cartItems={cart}
+                      enchor={anchorE2}
+                      open={showCart}
+                      handleHide={handleHideCart}
+                    />
                   </Box>
                 ) : null}
               </Box>

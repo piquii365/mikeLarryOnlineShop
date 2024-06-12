@@ -19,12 +19,11 @@ import Orders from "./components/administration/Orders";
 import AddProduct from "./components/administration/AddProduct";
 import MultipleOrders from "./components/administration/MultipleOrders";
 import SingleOrder from "./components/administration/SingleOrder";
-
 const App = () => {
   return (
     <>
+      <Nav />
       <Router>
-        <Nav />
         <Routes>
           <Route path="/admin">
             <Route path="/admin" element={<AdminLogin />} />
@@ -61,8 +60,8 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </Router>
+      <Footer />
     </>
   );
 };

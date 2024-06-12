@@ -30,7 +30,9 @@ const Profile = () => {
           </Link>
         </Box>
       </Stack>
-      <Box></Box>
+      <Box>
+        <Typography>Profile coming soon!!!</Typography>
+      </Box>
     </Box>
   );
 };

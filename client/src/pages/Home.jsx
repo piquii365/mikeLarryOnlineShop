@@ -86,14 +86,24 @@ const Home = () => {
         "l was impressed with the seamless ordering process and the prompt delivery of the hooverboard l recently purchased. The package arrived well-packaged and in perfect condition.",
     },
   ];
-  const scrollAmount = 1800;
+
   const containerRef = useRef();
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const handleScroll = (scrollAmount) => {
-    const newScrollPosition = scrollPosition + scrollAmount;
-    setScrollPosition(newScrollPosition);
-    containerRef.current.scrollLeft = newScrollPosition;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const goToNext = () => {
+    const isFirstTestimony = currentIndex === 0;
+    const newIndex = isFirstTestimony
+      ? testimonies.length - 1
+      : currentIndex - 1;
+    setCurrentIndex(newIndex);
   };
+  const goToPrev = () => {
+    const isLastTestimony = currentIndex === testimonies.length - 1;
+    const newIndex = isLastTestimony ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+  /*const scrollInterval = setInterval(() => {
+    goToNext();
+  }, 7000);*/
   const handleSubscribe = () => {
     if (email === "") {
       return;
@@ -181,7 +191,7 @@ const Home = () => {
           }}
         >
           <IconButton
-            onClick={() => handleScroll(-scrollAmount)}
+            onClick={goToPrev}
             size="large"
             sx={{
               display: { xs: "none", sm: "hidden" },
@@ -189,14 +199,18 @@ const Home = () => {
               backgroundColor: "#002c3e",
               "&:hover": { color: "#002c3e" },
               position: "absolute",
-              top: "30%",
-              left: "30%",
+              top: "20%",
+              left: 100,
+              transform: "translate(0, 0)",
+              zIndex: 1,
+              cursor: "pointer",
+              height: "50px",
             }}
           >
             <ArrowBack />
           </IconButton>
           <IconButton
-            onClick={() => handleScroll(scrollAmount)}
+            onClick={goToNext}
             size="large"
             sx={{
               display: { xs: "none", sm: "hidden" },
@@ -204,8 +218,13 @@ const Home = () => {
               backgroundColor: "#002c3e",
               "&:hover": { color: "#002c3e" },
               position: "absolute",
-              top: "30%",
-              right: "30%",
+              height: "50px",
+              right: 100,
+              top: "20%",
+
+              transform: "translate(0, 0)",
+              zIndex: 1,
+              cursor: "pointer",
             }}
           >
             <ArrowForward />
@@ -218,37 +237,34 @@ const Home = () => {
               overflowX: "hidden",
             }}
           >
-            {testimonies.map((customer, index) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  minWidth: "100%",
-                }}
-                key={index}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                minWidth: "100%",
+              }}
+            >
+              <Avatar
+                alt="Profile"
+                src={testimonies[currentIndex].image}
+                sx={{ width: 150, height: 150 }}
+              />
+              <Typography variant="h6" sx={{ fontWeight: "bold" }} paragraph>
+                {testimonies[currentIndex].name}
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{ fontWeight: "bold", color: "gray" }}
+                paragraph
               >
-                <Avatar
-                  alt="Profile"
-                  src={customer.image}
-                  sx={{ width: 150, height: 150 }}
-                />
-                <Typography variant="h6" sx={{ fontWeight: "bold" }} paragraph>
-                  {customer.name}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{ fontWeight: "bold", color: "gray" }}
-                  paragraph
-                >
-                  Customer
-                </Typography>
-                <Typography variant="body2" paragraph>
-                  {customer.testimony}
-                </Typography>
-              </Box>
-            ))}
+                Customer
+              </Typography>
+              <Typography variant="body2" paragraph>
+                {testimonies[currentIndex].testimony}
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Testimonies>

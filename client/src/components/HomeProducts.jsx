@@ -8,6 +8,7 @@ import {
   CardContent,
   Rating,
   Button,
+  Alert,
 } from "@mui/material";
 import ProductModal from "./ProductModal.jsx";
 const Product = styled(Card)({
@@ -106,6 +107,7 @@ const HomeProducts = () => {
       } else {
         setCartItems([...cartItems, { ...product, quantity: 1 }]);
       }
+      return <Alert severity="success">Item successfully added to cart</Alert>;
     } else if (action === "REMOVE") {
       if (productExists.quantity === 1) {
         setCartItems(

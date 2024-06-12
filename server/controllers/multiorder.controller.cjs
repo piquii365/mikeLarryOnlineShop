@@ -42,4 +42,19 @@ const multiplePayments = async (req, res) => {
     res.status(404);
   }
 };
-module.exports = { multiplePayments };
+const deleteMultiOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("Multi-Order delete ID: " + id);
+    const result = await MultiOrder.find({ _id: id });
+    if (result) {
+      res.status(200).json({ status: true });
+    } else {
+      res.status(203).json({ status: false, result: "Order does not exist" });
+    }
+  } catch (error) {
+    res.status(404).json({ status: false, error: "Internal Server Error" });
+    console.error(error);
+  }
+};
+module.exports = { multiplePayments, deleteMultiOrder };

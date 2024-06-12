@@ -187,38 +187,6 @@ const ProductModal = ({
                 </pre>
               </Box>
               <Box>
-                <Typography
-                  sx={{ fontSize: 20, fontWeight: "bolder" }}
-                  variant="body1"
-                  paragraph
-                >
-                  Variant
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "0.5em",
-                    maxWidth: "inherit",
-                    overflowX: "auto",
-                  }}
-                >
-                  {currentProduct.color?.map((color, index) => (
-                    <Typography
-                      sx={{
-                        fontSize: 20,
-                        fontWeight: "bolder",
-                        backgroundColor: "#f0f0f0",
-                        padding: "0.5em 2em",
-                        borderRadius: "5px",
-                      }}
-                      key={index}
-                      variant="body2"
-                      paragraph
-                    >
-                      {color}
-                    </Typography>
-                  ))}
-                </Box>
                 <Divider />
                 <Box
                   sx={{

@@ -22,6 +22,41 @@ const getMultipleOrders = async (req, res) => {
     console.error(error);
   }
 };
+const updateMultiOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { paymentStatus, orderStatus } = req.body;
+    const result = await MultipleOrders.findOneAndUpdate(
+      { _id: id },
+      { $set: { paymentStatus: paymentStatus, orderStatus: orderStatus } }
+    );
+    if (result) {
+      res.status(200).status({ status: true });
+    } else {
+      res.status(203).status({ status: false });
+    }
+  } catch (error) {
+    res.status(404).status({ status: false });
+  }
+};
+const updateSingleOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { paymentStatus, orderStatus } = req.body;
+    const result = await Orders.findOneAndUpdate(
+      { _id: id },
+      { $set: { paymentStatus: paymentStatus, orderStatus: orderStatus } }
+    );
+    if (result) {
+      res.status(200).status({ status: true });
+    } else {
+      res.status(203).status({ status: false });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(404).status({ status: false });
+  }
+};
 const handleDelete = async (req, res) => {
   try {
     const { id } = req.params;
@@ -37,4 +72,11 @@ const handleDelete = async (req, res) => {
     console.error(error);
   }
 };
-module.exports = { getOrders, handleDelete, getMultipleOrders };
+
+module.exports = {
+  getOrders,
+  handleDelete,
+  getMultipleOrders,
+  updateMultiOrder,
+  updateSingleOrder,
+};
