@@ -2,7 +2,6 @@ import {
   Box,
   ButtonGroup,
   Divider,
-  Icon,
   Paper,
   TextField,
   Typography,
@@ -16,10 +15,9 @@ import {
   TableBody,
   IconButton,
   Button,
-  Collapse,
 } from "@mui/material";
 import { ShoppingCart, Remove, Add, Delete } from "@mui/icons-material";
-import { BASE_URL, axiosPrivate } from "../api/axios.js";
+import axios, { BASE_URL } from "../api/axios.js";
 import { useState } from "react";
 const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
   const totalPrice = cartItems.reduce(
@@ -28,38 +26,29 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
       item.quantity * (item.discount === 0 ? item.price : item.discount),
     0
   );
-  const [values, setValues] = useState({ email: "", phoneNumber: "" });
+  const [values, setValues] = useState({
+    email: "",
+    phoneNumber: "",
+    address: "",
+  });
   const handlePayment = (event) => {
     event.preventDefault();
-    axiosPrivate
-      .post(`/${values.email}/multiple/payment`, cartItems)
+    const finalValues = {
+      cartItems: cartItems,
+      customerInfo: values,
+    };
+    axios
+      .post(`/multiple/payment/multi-order`, finalValues)
       .then((result) => {
         if (result.data.success) {
           location.assign(result.data.redirectUrl);
+        } else {
+          console.log(result.data);
         }
       })
       .catch((error) => {
         console.error(error);
       });
-  };
-  const handleEcocashPayment = (event) => {
-    event.preventDefault();
-    if (values.phoneNumber) {
-      axiosPrivate
-        .post(`/${values.email}/${values.phoneNumber}/payment`, cartItems)
-        .then((result) => {
-          if (result.data.success) {
-            location.assign(result.data.redirectUrl);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  };
-  const [ecocash, setEcocash] = useState(false);
-  const handleOpen = () => {
-    setEcocash(!ecocash);
   };
 
   return (
@@ -297,26 +286,29 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                         type="email"
                         id="email"
                         size="small"
-                        helperText="Email is required to make payments"
+                        helperText="Note that you do not need to be a paynow customer to pay"
                         required
                       />
-                      <Button onClick={handleOpen}>Use Ecocash</Button>
-                      <Collapse in={ecocash} timeout="auto" unmountOnExit>
-                        <Box>
-                          <TextField
-                            fullWidth
-                            onChange={(e) =>
-                              setValues({
-                                ...values,
-                                phoneNumber: e.target.value,
-                              })
-                            }
-                            id="phoneNumber"
-                            label="Phone Number"
-                            size="small"
-                          />
-                        </Box>
-                      </Collapse>
+                      <TextField
+                        onChange={(e) =>
+                          setValues({ ...values, phoneNumber: e.target.value })
+                        }
+                        placeholder="Enter phone number"
+                        id="phoneNumber"
+                        size="small"
+                        helperText="please provide your phone number as 0779898809 or +263780380209"
+                        required
+                      />
+                      <TextField
+                        onChange={(e) =>
+                          setValues({ ...values, address: e.target.value })
+                        }
+                        placeholder="Provide Physical Address"
+                        id="address"
+                        size="small"
+                        helperText="Please provide physical address, note that this is important for deliveries"
+                        required
+                      />
                       <img src="/images/paynow.PNG" />
                       <Button
                         type="submit"
@@ -331,21 +323,6 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                         }}
                       >
                         Buy Now
-                      </Button>
-                      <Button
-                        disabled
-                        onClick={handleEcocashPayment}
-                        type="submit"
-                        sx={{
-                          color: "#002c3e",
-                          border: "1px solid #002c3e",
-                          padding: "0.5em 2em",
-                          "&:hover": {
-                            color: "#002c3e",
-                          },
-                        }}
-                      >
-                        pay With Ecocash
                       </Button>
                     </Box>
                   </form>

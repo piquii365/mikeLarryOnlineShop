@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const verifyAdmin = require("./middleware/verifyAdmin.cjs");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const conn = require("./config/dbConn.config.cjs");
@@ -27,13 +28,13 @@ app.use(
     ],
   })
 );
-
 //routes
 app.use("/auth", require("./routes/auth.route.cjs"));
 app.use("/user", require("./routes/users.route.cjs"));
 app.use("/orders", require("./routes/orders.routes.cjs"));
 app.use("/products", require("./routes/products.route.cjs"));
 app.use(require("./routes/paynow.routes.cjs"));
+app.use("/multiple", require("./routes/multiOrderPayment.cjs"));
 //server initiation
 const PORT = process.env.PORT;
 const HOST = process.env.HOST;

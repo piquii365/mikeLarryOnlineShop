@@ -1,23 +1,27 @@
 import { Button, TextField, Typography, Box, Card, Link } from "@mui/material";
 import { Formik, Form, replace } from "formik";
 import { LoginValidationSchema } from "../../middleware/LoginValidationSchema.js";
-import axios from "../../api/axios.js";
+import axios, { axiosPrivate } from "../../api/axios.js";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const AdminLogin = () => {
-  const [error, setError] = useState("");
+  const { state } = useLocation();
+  const [error, setError] = useState(state ? state : "");
   const navigate = useNavigate();
   const handleSubmit = (values) => {
     axios
-      .post("/auth/admin/login", values)
+      .post("/auth/admin/login", values, { withCredentials: true })
       .then((result) => {
-        console.log(result.data);
         if (result.data.status) {
-          navigate(
-            "/admin/dashboard",
-            { state: { username: result.data.username } },
-            replace
-          );
+          try {
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${result.data.accessToken}`;
+            sessionStorage.setItem("User", result.data.username);
+            navigate("/admin/dashboard", replace);
+          } catch (error) {
+            console.error(error);
+          }
         } else {
           setError(result.data.Result);
         }

@@ -13,3 +13,25 @@ export const axiosMediaPrivate = axios.create({
   headers: { "Content-type": "multipart/form-data" },
   withCredentials: true,
 });
+let refresh = false;
+axios.interceptors.response.use(
+  (res) => res,
+  async (err) => {
+    if (err.response.status === 401 && !refresh) {
+      refresh = true;
+      const res = await axios.post(
+        "/admin/refresh",
+        {},
+        { withCredentials: true }
+      );
+      if (res.status === 200) {
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${res.data.accessToken}`;
+        return axios(err.config);
+      }
+      refresh = false;
+      return err;
+    }
+  }
+);

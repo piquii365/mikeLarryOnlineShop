@@ -16,6 +16,9 @@ import AdminRegister from "./components/administration/AdminRegister";
 import Products from "./components/administration/Products";
 import UpdateProduct from "./components/administration/UpdateProduct";
 import Orders from "./components/administration/Orders";
+import AddProduct from "./components/administration/AddProduct";
+import MultipleOrders from "./components/administration/MultipleOrders";
+import SingleOrder from "./components/administration/SingleOrder";
 
 const App = () => {
   return (
@@ -26,8 +29,21 @@ const App = () => {
           <Route path="/admin">
             <Route path="/admin" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<Admin />}>
-              <Route path="/admin/dashboard/products" element={<Products />} />
-              <Route path="/admin/dashboard/orders" element={<Orders />} />
+              <Route path="/admin/dashboard" element={<Products />} />
+              <Route path="/admin/dashboard/orders" element={<Orders />}>
+                <Route
+                  path="/admin/dashboard/orders"
+                  element={<SingleOrder />}
+                />
+                <Route
+                  path="/admin/dashboard/orders/multiple"
+                  element={<MultipleOrders />}
+                />
+              </Route>
+              <Route
+                path="/admin/dashboard/add-product"
+                element={<AddProduct />}
+              />
               <Route
                 path="/admin/dashboard/update"
                 element={<UpdateProduct />}

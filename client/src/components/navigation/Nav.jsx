@@ -4,8 +4,6 @@ import {
   Link,
   Box,
   Stack,
-  Menu,
-  MenuItem,
   IconButton,
   Tooltip,
   Modal,
@@ -25,22 +23,8 @@ const NavLink = styled(Link)({
   fontSize: "1.5rem",
   fontFamily: "Helvetica, serif",
 });
-import {
-  KeyboardArrowDown,
-  Search,
-  ShoppingCart,
-  List,
-  Close,
-} from "@mui/icons-material";
+import { List } from "@mui/icons-material";
 const Nav = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const [show, setShow] = useState(false);
   const handleShow = () => {
     setShow(true);
@@ -79,29 +63,6 @@ const Nav = () => {
         </Box>
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: "3em" }}>
           <NavLink href="/">HOME</NavLink>
-          <Button
-            onClick={handleClick}
-            sx={{
-              all: "unset",
-              cursor: "pointer",
-              textDecoration: "none",
-              color: "black",
-              padding: 0,
-              margin: 0,
-              display: "flex",
-              fontWeight: "bolder",
-              fontSize: "1.5rem",
-              fontFamily: "Helvetica, serif",
-              "&:hover": { backgroundColor: "none" },
-            }}
-            endIcon={<KeyboardArrowDown />}
-          >
-            PAGES
-          </Button>
-          <Menu id="menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-            <MenuItem onClick={handleClose}>ABOUT</MenuItem>
-            <MenuItem onClick={handleClose}>TESTIMONIAL</MenuItem>
-          </Menu>
           <ReactLink
             style={{
               textDecoration: "none",
@@ -179,35 +140,6 @@ const Nav = () => {
                   }}
                 >
                   <NavLink href="/">HOME</NavLink>
-                  <Button
-                    onClick={handleClick}
-                    sx={{
-                      all: "unset",
-                      cursor: "pointer",
-                      textDecoration: "none",
-                      color: "black",
-                      fontWeight: "bolder",
-                      padding: 0,
-                      margin: 0,
-                      display: "flex",
-                      fontSize: "larger",
-                      fontFamily: "Montserrat, sans-serif",
-                      "&:hover": { backgroundColor: "none" },
-                    }}
-                    endIcon={<KeyboardArrowDown />}
-                  >
-                    PAGES
-                  </Button>
-                  <Menu
-                    id="menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                  >
-                    <MenuItem onClick={handleClose}>ABOUT</MenuItem>
-                    <MenuItem onClick={handleClose}>TESTIMONIAL</MenuItem>
-                  </Menu>
-                  <NavLink href="#products">PRODUCTS</NavLink>
                   <NavLink href="/blog">BLOG</NavLink>
                   <NavLink href="/contact">CONTACT</NavLink>
                   <NavLink href="/login">Sign Up</NavLink>

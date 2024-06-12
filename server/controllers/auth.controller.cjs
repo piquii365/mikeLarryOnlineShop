@@ -243,7 +243,7 @@ const refreshAdmin = async (req, res) => {
                   expiresIn: "15m",
                 }
               );
-              res.json({ accessToken });
+              res.status(200).json({ accessToken });
             }
           }
         );

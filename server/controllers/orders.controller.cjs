@@ -1,4 +1,5 @@
 const Orders = require("../models/oders.cjs");
+const MultipleOrders = require("../models/multpleOrders.cjs");
 const getOrders = async (req, res) => {
   try {
     const orders = await Orders.find();
@@ -9,6 +10,15 @@ const getOrders = async (req, res) => {
     }
   } catch (error) {
     res.status(404).json({ error: "Internal Server Error" });
+    console.error(error);
+  }
+};
+const getMultipleOrders = async (req, res) => {
+  try {
+    const result = await MultipleOrders.find();
+    res.status(200).json({ status: true, orders: result });
+  } catch (error) {
+    res.status(404).json({ status: false, error: "Internal Server Error" });
     console.error(error);
   }
 };
@@ -27,4 +37,4 @@ const handleDelete = async (req, res) => {
     console.error(error);
   }
 };
-module.exports = { getOrders, handleDelete };
+module.exports = { getOrders, handleDelete, getMultipleOrders };

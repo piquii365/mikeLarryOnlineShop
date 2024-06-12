@@ -30,7 +30,6 @@ const Products = () => {
         {products?.length === 0 ? (
           <Box>
             <Typography>You have not added any products yet </Typography>
-            <Button>Add Products</Button>
           </Box>
         ) : (
           <Box

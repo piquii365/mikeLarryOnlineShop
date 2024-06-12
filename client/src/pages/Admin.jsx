@@ -1,7 +1,25 @@
-import { Outlet, useLocation } from "react-router-dom";
-import axios from "../api/axios";
+import { Outlet, useNavigate } from "react-router-dom";
+import axios, { axiosPrivate } from "../api/axios";
 import { Box, Button, Stack, Typography, Link } from "@mui/material";
+import { useEffect, useState } from "react";
+
 const Admin = () => {
+  const navigate = useNavigate();
+  const [admin, setAdmin] = useState("");
+  useEffect(() => {
+    (async () => {
+      try {
+        const user = sessionStorage.getItem("User");
+        setAdmin(user);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+  if (!admin) {
+    navigate("/admin");
+  }
+
   const handleLogout = () => {
     axios
       .get("/auth/admin/logout")
@@ -14,7 +32,7 @@ const Admin = () => {
         console.log(error);
       });
   };
-  const { state } = useLocation();
+
   return (
     <Box
       sx={{
@@ -41,16 +59,23 @@ const Admin = () => {
           }}
         >
           <Box>
-            <Typography>Mike </Typography>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bolder", fontSize: 20 }}
+            >
+              Welcome: {admin}
+            </Typography>
           </Box>
           <Box>
-            <Button href="/admin/dashboard/products" component={Link}>
+            <Button href="/admin/dashboard" component={Link}>
               PRODUCTS
             </Button>
             <Button href="/admin/dashboard/orders" component={Link}>
               ORDERS
             </Button>
-            <Button>PAYMENTS</Button>
+            <Button href="/admin/dashboard/add-product" component={Link}>
+              Add Product
+            </Button>
           </Box>
           <Box>
             <Button onClick={handleLogout}>Logout</Button>
@@ -58,7 +83,9 @@ const Admin = () => {
         </Stack>
         <Stack sx={{ display: { xs: "flex", sm: "flex", md: "none" } }}>
           <Box>
-            <Typography>Mike </Typography>
+            <Typography sx={{ fontWeight: "bolder" }}>
+              Welcome:{admin}
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -68,11 +95,15 @@ const Admin = () => {
             }}
           >
             <Box>
-              <Button href="/admin/dashboard/products" component={Link}>
+              <Button href="/admin/dashboard" component={Link}>
                 PRODUCTS
               </Button>
-              <Button>ORDERS</Button>
-              <Button>PAYMENTS</Button>
+              <Button href="/admin/dashboard/orders" component={Link}>
+                ORDERS
+              </Button>
+              <Button href="/admin/dashboard/add-product" component={Link}>
+                Add Product
+              </Button>
             </Box>
             <Button onClick={handleLogout}>Logout</Button>
           </Box>
