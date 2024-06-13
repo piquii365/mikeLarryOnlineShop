@@ -11,6 +11,7 @@ const orderSchema = new mongoose.Schema(
     buyer: { type: String },
     location: { type: String },
     phoneNumber: { type: String },
+    fullName: { type: String },
     paymentReference: { type: String },
     paymentStatus: {
       type: String,

@@ -4,6 +4,7 @@ const multiOrderSchema = new mongoose.Schema(
     customerEmail: { type: String },
     customerPhoneNumber: { type: String },
     customerAddress: { type: String },
+    customerFullName: { type: String },
     order: [
       {
         item: { type: String },

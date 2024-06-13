@@ -63,9 +63,9 @@ const Footer = () => {
             sx={{ color: "white", width: "fit-content" }}
             startIcon={<Phone />}
             component={Link}
-            href={"tel:+2637778275093"}
+            href={"tel:+263771897299"}
           >
-            Call +2637 778275093
+            Call +263 771 897 299
           </Button>
           <Button
             sx={{

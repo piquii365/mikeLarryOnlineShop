@@ -27,6 +27,7 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
     0
   );
   const [values, setValues] = useState({
+    fullName: "",
     email: "",
     phoneNumber: "",
     address: "",
@@ -261,15 +262,31 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                     gap: "1em",
                     py: "2em",
                     boxShadow: { xs: "none", sm: "none" },
+                    flexDirection: "column",
                   }}
                 >
-                  <Typography
-                    variant="h4"
-                    sx={{ fontWeight: "bolder" }}
-                    paragraph
-                  >
-                    Total Price: ${Math.round(totalPrice)}
-                  </Typography>
+                  <Box sx={{ width: "inherit" }}>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontWeight: "bolder", marginBottom: "1em" }}
+                      paragraph
+                    >
+                      Total Price: ${Math.round(totalPrice)}
+                    </Typography>
+                    <Button
+                      fullWidth
+                      onClick={() => handleCart("CLEAR", "")}
+                      sx={{
+                        backgroundColor: "#f0f0f0",
+                        padding: "0.5em 2em",
+                        marginTop: { xs: "2em", sm: "2em" },
+                        marginBottom: "1em",
+                      }}
+                    >
+                      Clear Cart
+                    </Button>
+                  </Box>
+
                   <form onSubmit={handlePayment}>
                     <Box
                       sx={{
@@ -287,6 +304,17 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                         id="email"
                         size="small"
                         helperText="Note that you do not need to be a paynow customer to pay"
+                        required
+                      />
+                      <TextField
+                        onChange={(e) =>
+                          setValues({ ...values, email: e.target.value })
+                        }
+                        placeholder="Enter Full Name"
+                        type="text"
+                        id="fullName"
+                        size="small"
+                        helperText="Note that your full name is required for delivery"
                         required
                       />
                       <TextField
@@ -326,17 +354,6 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                       </Button>
                     </Box>
                   </form>
-                  <Button
-                    onClick={() => handleCart("CLEAR", "")}
-                    sx={{
-                      backgroundColor: "#f0f0f0",
-                      padding: "0.5em 2em",
-                      marginTop: { xs: "2em", sm: "2em" },
-                      width: "20vmax",
-                    }}
-                  >
-                    Clear Cart
-                  </Button>
                 </Box>
               </Box>
             )}

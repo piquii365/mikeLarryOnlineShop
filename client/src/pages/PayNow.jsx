@@ -31,9 +31,10 @@ const PayNow = () => {
     quantity: 1,
     discount: 0,
   });
-
+  const [error, setError] = useState("");
   const [quantity, setQuantity] = useState(0);
   const initialValues = {
+    fullName: "",
     email: "",
     color: [],
     address: "",
@@ -90,6 +91,7 @@ const PayNow = () => {
   };
   const handlePurchase = (values) => {
     const finalValues = {
+      fullName: values.fullName,
       color: values.color,
       address: values.address,
       phoneNumber: values.phoneNumber,
@@ -102,6 +104,8 @@ const PayNow = () => {
       .then((result) => {
         if (result.data.success) {
           location.assign(result.data.redirectUrl);
+        } else {
+          setError("Error while initiating the transaction");
         }
       })
       .catch((error) => console.log(error));
@@ -256,7 +260,17 @@ const PayNow = () => {
                 height: "min-content",
               }}
             >
-              <Typography>Payment Details</Typography>
+              <Typography sx={{ fontWeight: "bolder" }}>
+                Payment Details
+              </Typography>
+              <Typography variant="body2" paragraph>
+                These details will be used for delivery purposes{" "}
+              </Typography>
+              {error && (
+                <Typography color="red" paragraph>
+                  {error}
+                </Typography>
+              )}
               <Box>
                 <Formik onSubmit={handlePurchase} initialValues={initialValues}>
                   {({
@@ -294,6 +308,14 @@ const PayNow = () => {
                           id="email"
                           type="email"
                           label="Email"
+                          size="small"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                        <TextField
+                          id="fullName"
+                          type="text"
+                          label="Full Name"
                           size="small"
                           onBlur={handleBlur}
                           onChange={handleChange}

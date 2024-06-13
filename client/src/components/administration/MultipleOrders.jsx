@@ -69,6 +69,7 @@ const MultipleOrders = () => {
                   Order No:{index + 1}
                 </Typography>
                 <Box>
+                  <Typography>Full Name: {order.customerFullName}</Typography>
                   <Typography>
                     Customer Email:
                     <a href={`mailto:${order.customerEmail}`}>

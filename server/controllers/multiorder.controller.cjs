@@ -29,6 +29,7 @@ const multiplePayments = async (req, res) => {
       const values = {
         customerEmail: customerInfo.email,
         customerPhoneNumber: customerInfo.phoneNumber,
+        customerFullName: customerInfo.fullName,
         customerAddress: customerInfo.address,
         order: order,
         paymentReference: ref,
