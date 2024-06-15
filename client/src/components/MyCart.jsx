@@ -286,7 +286,6 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                       Clear Cart
                     </Button>
                   </Box>
-
                   <form onSubmit={handlePayment}>
                     <Box
                       sx={{
@@ -308,7 +307,7 @@ const MyCart = ({ enchor, open, handleHide, cartItems, handleCart }) => {
                       />
                       <TextField
                         onChange={(e) =>
-                          setValues({ ...values, email: e.target.value })
+                          setValues({ ...values, fullName: e.target.value })
                         }
                         placeholder="Enter Full Name"
                         type="text"

@@ -14,13 +14,11 @@ const newProduct = async (req, res) => {
       price: req.body.price,
       discount: req.body.discount,
       color: req.body.color,
-      category: req.body.category,
       images: images,
     };
     const result = await Products.insertMany([values]);
     res.status(200).json({ status: true });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ status: false, Result: "Internal Server Error" });
   }
 };

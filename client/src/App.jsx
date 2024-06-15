@@ -19,6 +19,11 @@ import Orders from "./components/administration/Orders";
 import AddProduct from "./components/administration/AddProduct";
 import MultipleOrders from "./components/administration/MultipleOrders";
 import SingleOrder from "./components/administration/SingleOrder";
+import Customers from "./components/administration/Custormers";
+import DefaultCustomer from "./components/administration/customers/DefaultCustomer";
+import AddCustomer from "./components/administration/customers/AddCustomer";
+import UpdateCustomer from "./components/administration/customers/UpdateCustomer";
+
 const App = () => {
   return (
     <>
@@ -29,6 +34,20 @@ const App = () => {
             <Route path="/admin" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<Admin />}>
               <Route path="/admin/dashboard" element={<Products />} />
+              <Route path="/admin/dashboard/customers" element={<Customers />}>
+                <Route
+                  path="/admin/dashboard/customers"
+                  element={<DefaultCustomer />}
+                />
+                <Route
+                  path="/admin/dashboard/customers/update"
+                  element={<UpdateCustomer />}
+                />
+                <Route
+                  path="/admin/dashboard/customers/add"
+                  element={<AddCustomer />}
+                />
+              </Route>
               <Route path="/admin/dashboard/orders" element={<Orders />}>
                 <Route
                   path="/admin/dashboard/orders"

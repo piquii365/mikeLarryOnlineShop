@@ -32,6 +32,7 @@ app.use(
 app.use("/auth", require("./routes/auth.route.cjs"));
 app.use("/user", require("./routes/users.route.cjs"));
 app.use("/orders", require("./routes/orders.routes.cjs"));
+app.use("/customer", require("./routes/customer.route.cjs"));
 app.use("/products", require("./routes/products.route.cjs"));
 app.use(require("./routes/paynow.routes.cjs"));
 app.use("/multiple", require("./routes/multiOrderPayment.cjs"));

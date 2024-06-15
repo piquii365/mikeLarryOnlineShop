@@ -105,6 +105,7 @@ const HomeProducts = () => {
           )
         );
       } else {
+        alert(`${product.name} added to cart`);
         setCartItems([...cartItems, { ...product, quantity: 1 }]);
       }
       return <Alert severity="success">Item successfully added to cart</Alert>;

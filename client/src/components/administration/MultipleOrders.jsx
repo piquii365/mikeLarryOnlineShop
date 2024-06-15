@@ -44,6 +44,7 @@ const MultipleOrders = () => {
       })
       .catch((error) => console.error(error));
   };
+  console.log(orders);
   return (
     <>
       <Box>

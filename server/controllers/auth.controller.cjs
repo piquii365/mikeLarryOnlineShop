@@ -14,14 +14,17 @@ const addAdmin = async (req, res) => {
       $or: [{ username: values.username }, { email: values.email }],
     }).exec();
     if (isAvailable) {
-      res.status(200).json({ status: false });
+      res.status(200).json({
+        status: false,
+        Result: "Username or Password already registered",
+      });
     } else {
       await Admin.insertMany([values])
         .then((result) => {
           res.status(201).json({ status: true, Result: result });
         })
         .catch((error) => {
-          res.status(400).json({ status: false, Result: "Bad request" });
+          res.status(200).json({ status: false, Result: "Bad request" });
         });
     }
   } catch (error) {
@@ -295,7 +298,6 @@ const refreshUser = async (req, res) => {
     res.status(500).json({ Result: "Internal Server Error" });
   }
 };
-
 module.exports = {
   addAdmin,
   signUser,

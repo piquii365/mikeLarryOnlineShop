@@ -94,7 +94,7 @@ const SingleOrder = () => {
                     Order No:{index + 1}
                   </Typography>
                   <Box>
-                    <Typography>Customer Email: {order?.fullName}</Typography>
+                    <Typography>Customer Name: {order?.fullName}</Typography>
                     <Typography>
                       Customer Email:
                       <a href={`mailto:${order?.buyer}`}>{order.buyer}</a>

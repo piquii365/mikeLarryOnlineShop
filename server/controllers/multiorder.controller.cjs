@@ -34,8 +34,16 @@ const multiplePayments = async (req, res) => {
         order: order,
         paymentReference: ref,
       };
-      await MultiOrder.insertMany([values]);
-      res.status(203).json(result);
+      if (result.success) {
+        await MultiOrder.insertMany([values]);
+        res.status(203).json(result);
+      } else {
+        res.status(204).json({
+          error: true,
+          Result:
+            "Error while initiating your transaction please wait for a moment and retry ",
+        });
+      }
     } else {
       res.status(200).json({ error: true, Result: "No Items Provided" });
     }
@@ -46,9 +54,9 @@ const multiplePayments = async (req, res) => {
 const deleteMultiOrder = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log("Multi-Order delete ID: " + id);
     const result = await MultiOrder.find({ _id: id });
     if (result) {
+      await MultiOrder.deleteOne({ _id: id });
       res.status(200).json({ status: true });
     } else {
       res.status(203).json({ status: false, result: "Order does not exist" });

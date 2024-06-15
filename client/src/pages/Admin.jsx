@@ -76,6 +76,9 @@ const Admin = () => {
             <Button href="/admin/dashboard/add-product" component={Link}>
               Add Product
             </Button>
+            <Button href="/admin/dashboard/customers" component={Link}>
+              Customers
+            </Button>
           </Box>
           <Box>
             <Button onClick={handleLogout}>Logout</Button>
