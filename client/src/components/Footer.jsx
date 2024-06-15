@@ -104,6 +104,7 @@ const Footer = () => {
                 fontWeight: "bolder",
                 fontSize: 40,
                 cursor: "pointer",
+                mt: "1em",
               }}
               href="/blog"
               variant="h5"
@@ -182,7 +183,7 @@ const Footer = () => {
           marginBottom: "2em",
         }}
       >
-        <Typography>
+        <Typography sx={{ width: { xs: "80%", sm: "80%", md: "100%" } }}>
           © 2024 All Rights Reserved By Mike Larry Incorporated
         </Typography>
         <Typography>Powered by JK</Typography>

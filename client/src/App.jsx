@@ -23,10 +23,11 @@ import Customers from "./components/administration/Custormers";
 import DefaultCustomer from "./components/administration/customers/DefaultCustomer";
 import AddCustomer from "./components/administration/customers/AddCustomer";
 import UpdateCustomer from "./components/administration/customers/UpdateCustomer";
+import { Box } from "@mui/material";
 
 const App = () => {
   return (
-    <>
+    <Box sx={{ margin: 0, padding: 0, boxSizing: "border-box" }}>
       <Nav />
       <Router>
         <Routes>
@@ -81,7 +82,7 @@ const App = () => {
         </Routes>
       </Router>
       <Footer />
-    </>
+    </Box>
   );
 };
 

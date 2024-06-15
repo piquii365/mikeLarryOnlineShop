@@ -175,10 +175,10 @@ const Home = () => {
           sx={{
             fontFamily: "'Playfair Display', serif",
             fontWeight: "bolder",
-            fontSize: { sm: 10, md: 55 },
+            fontSize: { sm: 8, md: 40 },
           }}
         >
-          Customer&apos;s Testimonial
+          Testimonials
         </Typography>
         <Box
           sx={{
@@ -194,13 +194,12 @@ const Home = () => {
             onClick={goToPrev}
             size="large"
             sx={{
-              display: { xs: "none", sm: "hidden" },
               color: "white",
               backgroundColor: "#002c3e",
               "&:hover": { color: "#002c3e" },
               position: "absolute",
               top: "20%",
-              left: 100,
+              left: { xs: 0, sm: 0, md: 100, lg: 100 },
               transform: "translate(0, 0)",
               zIndex: 1,
               cursor: "pointer",
@@ -213,15 +212,13 @@ const Home = () => {
             onClick={goToNext}
             size="large"
             sx={{
-              display: { xs: "none", sm: "hidden" },
               color: "white",
               backgroundColor: "#002c3e",
               "&:hover": { color: "#002c3e" },
               position: "absolute",
               height: "50px",
-              right: 100,
+              right: { xs: 0, sm: 0, md: 100, lg: 100 },
               top: "20%",
-
               transform: "translate(0, 0)",
               zIndex: 1,
               cursor: "pointer",
@@ -278,7 +275,17 @@ const Home = () => {
             fontSize: { sm: 10, md: 55 },
           }}
         >
-          Subscribe To Get Discount Offers
+          Subscribe
+        </Typography>
+        <Typography
+          sx={{
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: "bolder",
+            color: "#002c3e",
+            fontSize: { sm: 10, md: 55 },
+          }}
+        >
+          By Subscribing you can get discount offers
         </Typography>
         {msg && (
           <Typography color="red" variant="bod1" paragraph>
